@@ -1,39 +1,87 @@
 {
   "items": [
     {
-      "category": "BCDR",
-      "subcategory": "Azure Key Vault",
-      "text": "Protect your backup data with encryption and store keys safely in Azure Key Vault",
-      "description": "Ensure that your backups are protected against attacks. ",
-      "guid": "4b0d934a-3487-426e-b79d-6b5c3a36495b",
+      "category": "Enviroment Setup",
+      "subcategory": "SVN & resources",
+      "text": "Separation of resources for development, testing and production",
+      "guid": "75285279-541c-45bf-9d4e-1854277d4cdc",
       "severity": "Medium",
-      "link": "https://learn.microsoft.com/azure/api-management/backends"
+      "training": "https://docs.microsoft.com/learn/modules/azure-ad-privileged-identity-management/",
+      "link": "https://docs.microsoft.com/azure/active-directory/roles/security-emergency-access"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "SVN & resources",
+      "text": "Development enviroment connected to source control as a minimum",
+      "guid": "116cc031-ae5b-41fb-9888-9535e327896e",
+      "severity": "Medium",
+      "link": "https://docs.microsoft.com/azure/role-based-access-control/overview"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "SVN & resources",
+      "text": "Test, UAT, production) do not need to be connected to source control.",
+      "guid": "31b67d67-be59-4529-8093-845d597cb391",
+      "severity": "Medium",
+      "link": "https://docs.microsoft.com/azure/active-directory/conditional-access/overview"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "SVN & resources",
+      "text": "Multiple Data Factory instances to be used - separate business processes , regional regulations etc",
+      "guid": "bad37ead-53cc-46ce-8d7a-aab3571449ab",
+      "severity": "Medium",
+      "link": "https://docs.microsoft.com/azure/active-directory/authentication/concept-mfa-howitworks"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "SVN & resources",
+      "text": "Development service should be used with multiple code repository branches i.e. Feature that align to backlog/developer features.",
+      "guid": "8053d88e-89dc-47b3-9be2-a1a27f7a9e91",
+      "severity": "Medium",
+      "link": "https://docs.microsoft.com/azure/role-based-access-control/overview"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "SVN & resources",
+      "text": "Pull requests of feature branches would be peer reviewed before merging into the main delivery ",
+      "guid": "be1f38ce-f298-412b-b463-cbbac79c199d",
+      "severity": "Medium",
+      "link": "https://docs.microsoft.com/azure/active-directory/privileged-identity-management/pim-configure"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "Source Code Artifacts",
+      "text": "From the collaboration branch and feature branches artifacts for each part of the Data Factory instance, separated by sub folders.",
+      "guid": "bb91933d-90ca-4e2c-a881-3706f7c0cb9f",
+      "severity": "Medium",
+      "link": "https://docs.microsoft.com/azure/active-directory/roles/security-planning#identify-microsoft-accounts-in-administrative-roles-that-need-to-be-switched-to-work-or-school-accounts"
     }
   ],
   "categories": [
     {
-      "name": "Identity and Access Management"
+      "name": "Enviroment Setup"
     },
     {
-      "name": "Network Topology and Connectivity"
+      "name": "Deployment"
+    },
+    {
+      "name": "Design"
     },
     {
       "name": "Security"
     },
     {
-      "name": "Management"
+      "name": "Performance"
     },
     {
-      "name": "Governance"
+      "name": "Logging"
     },
     {
-      "name": "Platform automation and DevOps"
+      "name": "Data Masking"
     },
     {
-      "name": "Monitoring and Management"
-    },
-    {
-      "name": "BC/DR"
+      "name": "Code"
     }
   ],
   "status": [
