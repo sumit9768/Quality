@@ -1,0 +1,76 @@
+{
+  "items": [
+    {
+      "category": "BCDR",
+      "subcategory": "Azure Key Vault",
+      "text": "Protect your backup data with encryption and store keys safely in Azure Key Vault",
+      "description": "Ensure that your backups are protected against attacks. ",
+      "guid": "4b0d934a-3487-426e-b79d-6b5c3a36495b",
+      "severity": "Medium",
+      "link": "https://learn.microsoft.com/azure/api-management/backends"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Identity and Access Management"
+    },
+    {
+      "name": "Network Topology and Connectivity"
+    },
+    {
+      "name": "Security"
+    },
+    {
+      "name": "Management"
+    },
+    {
+      "name": "Governance"
+    },
+    {
+      "name": "Platform automation and DevOps"
+    },
+    {
+      "name": "Monitoring and Management"
+    },
+    {
+      "name": "BC/DR"
+    }
+  ],
+  "status": [
+    {
+      "name": "Not verified",
+      "description": "This check has not been looked at yet"
+    },
+    {
+      "name": "Open",
+      "description": "There is an action item associated to this check"
+    },
+    {
+      "name": "Fulfilled",
+      "description": "This check has been verified, and there are no further action items associated to it"
+    },
+    {
+      "name": "Not required",
+      "description": "Recommendation understood, but not needed by current requirements"
+    },
+    {
+      "name": "N/A",
+      "description": "Not applicable for current design"
+    }
+  ],
+  "severities": [
+    {
+      "name": "High"
+    },
+    {
+      "name": "Medium"
+    },
+    {
+      "name": "Low"
+    }
+  ],
+  "metadata": {
+    "name": "Use the 'Import latest checklist' button to get the latest version of a review checklist"
+  }
+}
+
