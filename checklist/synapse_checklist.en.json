@@ -132,6 +132,14 @@
       "guid": "8ed4b353-78c3-4469-a16b-2763cffe1b9b",
       "severity": "Low",
       "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Test111, UAT, production) do not need to be connected to source control.",
+      "guid": "8ed4b353-78c3-4469-a16b-2763cffe1b9b",
+      "severity": "Low",
+      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
     }
   ],
   "categories": [
