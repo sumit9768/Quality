@@ -1,0 +1,197 @@
+{
+  "items": [
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "SVN & resources",
+      "text": "Separation of resources for development, testing and production",
+      "guid": "75285279-541c-45bf-9d4e-1854277d4cdc",
+      "severity": "High"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "SVN & resources",
+      "text": "Development enviroment connected to source control as a minimum",
+      "guid": "116cc031-ae5b-41fb-9888-9535e327896e",
+      "severity": "Medium"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "SVN & resources",
+      "text": "Test, UAT, production) do not need to be connected to source control.",
+      "guid": "31b67d67-be59-4529-8093-845d597cb391",
+      "severity": "Medium"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "SVN & resources",
+      "text": "Multiple Data Factory instances to be used - separate business processes , regional regulations etc",
+      "guid": "bad37ead-53cc-46ce-8d7a-aab3571449ab",
+      "severity": "High"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "SVN & resources",
+      "text": "Development service should be used with multiple code repository branches i.e. Feature that align to backlog/developer features.",
+      "guid": "8053d88e-89dc-47b3-9be2-a1a27f7a9e91",
+      "severity": "Medium"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "SVN & resources",
+      "text": "Pull requests of feature branches would be peer reviewed before merging into the main delivery ",
+      "guid": "be1f38ce-f298-412b-b463-cbbac79c199d",
+      "severity": "Medium"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "Source Code Artifacts",
+      "text": "From the collaboration branch and feature branches artifacts for each part of the Data Factory instance, separated by sub folders.",
+      "guid": "bb91933d-90ca-4e2c-a881-3706f7c0cb9f",
+      "severity": "Medium"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "Source Code Artifacts",
+      "text": "If publishing the Data Factory instance the publish branch contain a set of ARM templates, one for the instance and one for all parts of the Data Factory.",
+      "guid": "dc8eb9d1-bb73-4b26-a5a6-7eba8ed4b353",
+      "severity": "Medium",
+      "link": "https://learn.microsoft.com/azure/data-factory/source-control"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "Source Code Artifacts",
+      "text": "Every time  PR is merged into the develop/main branch, Publish should be run from publish branch otherwise the branch becomes stale and out of sync.Use Overwrite live mode functionality or Disconnect and reconnect Git repository as for fixing the Stale branch issue",
+      "guid": "78c34698-16b2-4763-affe-1b9b599de0d5",
+      "severity": "Medium",
+      "link": "https://learn.microsoft.com/azure/data-factory/source-control#stale-publish-branch"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "Deployment",
+      "text": "with peer reviews merge changes from developers in the central branch we can then have an automated process to move development to Production",
+      "guid": "973cd4ce-36c0-4c81-97fa-fbc4cfd43918",
+      "severity": "Medium"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "Deployment",
+      "text": "Artifacts when merged from feature branch to main branch through reviewed pull requests , publish to generate artifacts in adf_publish branch.",
+      "guid": "548c2847-ec66-4178-a824-445ce1aed345",
+      "severity": "Low"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "Deployment",
+      "text": "Develop Azure Devops Pipelines for moving code from one environment to another ",
+      "guid": "3aec7239-2376-415d-b58c-5a4b1925383a",
+      "severity": "Low"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "Deployment",
+      "text": "Create and Use Devops Variable groups to pass the environment specific vaues/parameters",
+      "guid": "58a9c279-9c42-4bb6-9d0c-65556246b338",
+      "severity": "Low"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Its good practise to append a Suffix to the ADF componen to specify the type of component likePilpeline starts with PL_<PipilineName>Linked Service starts with LS_<LinkedServiceName>Dataset starts with DS_<DatasetName>Trigger starts with TR_<TriggerName>Also the component names should give some information about itPipilineName should give a brief of the task it accomplish ex PL_Load_Stage will load data into stagingLinkedServiceName - should specify the source/traget data source type ex LS_Az_SQL_Land will connect to Azure SQL server in the landing zoneDatasetName should give the source/target table or file name ex DS_Land_CustomerTriggerName should specify purpose of run and frequency like Daily,weekly,monthly(H/D/W/M) ex TR_Stage_Hourly",
+      "guid": "563a4dc7-4a74-48b6-922a-d190916a6649",
+      "severity": "Low",
+      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "ANNOTATIONS - All components within Data Factory now support adding annotations. This builds on the description content by adding information about ?what? your pipeline is doing as well as ?why?",
+      "guid": "8fadfe27-7de2-483b-8ac3-52baa9b75708",
+      "severity": "Low",
+      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Every Pipeline and Activity within Data Factory has a none mandatory description field. start making better use of it. ",
+      "guid": "49aa8092-dc8e-4b9d-8bb7-3b26a5a67eba",
+      "severity": "Low",
+      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Folders and sub-folders are such a great way to organize our Data Factory components, we should all be using them to help ease of navigation",
+      "guid": "8ed4b353-78c3-4469-a16b-2763cffe1b9b",
+      "severity": "Low",
+      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Test, UAT, production) do not need to be connected to source control.",
+      "guid": "8ed4b353-78c3-4469-a16b-2763cffe1b9b",
+      "severity": "Low",
+      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Enviroment Setup"
+    },
+    {
+      "name": "Design"
+    },
+    {
+      "name": "Security"
+    },
+    {
+      "name": "Performance"
+    },
+    {
+      "name": "Logging"
+    },
+    {
+      "name": "Data Masking"
+    },
+    {
+      "name": "Code"
+    }
+  ],
+  "status": [
+    {
+      "name": "Not verified",
+      "description": "This check has not been looked at yet"
+    },
+    {
+      "name": "Open",
+      "description": "There is an action item associated to this check"
+    },
+    {
+      "name": "Fulfilled",
+      "description": "This check has been verified, and there are no further action items associated to it"
+    },
+    {
+      "name": "Not required",
+      "description": "Recommendation understood, but not needed by current requirements"
+    },
+    {
+      "name": "N/A",
+      "description": "Not applicable for current design"
+    }
+  ],
+  "severities": [
+    {
+      "name": "High"
+    },
+    {
+      "name": "Medium"
+    },
+    {
+      "name": "Low"
+    }
+  ],
+  "metadata": {
+    "name": "Use the 'Import latest checklist' button to get the latest version of a review checklist"
+  }
+}
+
