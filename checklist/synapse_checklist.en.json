@@ -104,7 +104,7 @@
     {
       "category": "Design",
       "subcategory": "Naming Conventions",
-      "text": "ANNOTATIONS - All components within Data Factory now support adding annotations. This builds on the description content by adding information about ‘what’ your pipeline is doing as well as ‘why’",
+      "text": "ANNOTATIONS - All components within Data Factory now support adding annotations. This builds on the description content by adding information about ?what? your pipeline is doing as well as ?why?",
       "guid": "8fadfe27-7de2-483b-8ac3-52baa9b75708",
       "severity": "Low",
       "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
@@ -121,6 +121,14 @@
       "category": "Design",
       "subcategory": "Naming Conventions",
       "text": "Folders and sub-folders are such a great way to organize our Data Factory components, we should all be using them to help ease of navigation",
+      "guid": "8ed4b353-78c3-4469-a16b-2763cffe1b9b",
+      "severity": "Low",
+      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Test, UAT, production) do not need to be connected to source control.",
       "guid": "8ed4b353-78c3-4469-a16b-2763cffe1b9b",
       "severity": "Low",
       "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
