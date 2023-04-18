@@ -2,144 +2,347 @@
   "items": [
     {
       "category": "Enviroment Setup",
-      "subcategory": "SVN & resources",
+      "subcategory": "Resource Instances",
       "text": "Separation of resources for development, testing and production",
-      "guid": "75285279-541c-45bf-9d4e-1854277d4cdc",
-      "severity": "High"
+      "guid": "a22a4956-e7a8-4dc4-a20e-27c3e29711b1"
     },
     {
       "category": "Enviroment Setup",
       "subcategory": "SVN & resources",
       "text": "Development enviroment connected to source control as a minimum",
-      "guid": "116cc031-ae5b-41fb-9888-9535e327896e",
-      "severity": "Medium"
+      "guid": "352beee0-79b5-488d-bfc4-972cd4cd21b0"
     },
     {
       "category": "Enviroment Setup",
       "subcategory": "SVN & resources",
-      "text": "Test, UAT, production) do not need to be connected to source control.",
-      "guid": "31b67d67-be59-4529-8093-845d597cb391",
-      "severity": "Medium"
+      "text": "Other downstream environments (test, UAT, production) do not need to be connected to source control.",
+      "guid": "cc58b4a4-b191-4438-9a58-a9c2689c32ab"
     },
     {
       "category": "Enviroment Setup",
       "subcategory": "SVN & resources",
       "text": "Multiple Data Factory instances to be used - separate business processes , regional regulations etc",
-      "guid": "bad37ead-53cc-46ce-8d7a-aab3571449ab",
-      "severity": "High"
+      "guid": "57d0c655-4623-46a3-9755-3a4cc739648b"
     },
     {
       "category": "Enviroment Setup",
       "subcategory": "SVN & resources",
       "text": "Development service should be used with multiple code repository branches i.e. Feature that align to backlog/developer features.",
-      "guid": "8053d88e-89dc-47b3-9be2-a1a27f7a9e91",
-      "severity": "Medium"
+      "guid": "6622ac19-f916-4965-998e-adfd277de183"
     },
     {
       "category": "Enviroment Setup",
       "subcategory": "SVN & resources",
       "text": "Pull requests of feature branches would be peer reviewed before merging into the main delivery ",
-      "guid": "be1f38ce-f298-412b-b463-cbbac79c199d",
-      "severity": "Medium"
+      "guid": "b1ac252b-9a9b-4646-8848-9a8f82db8eb9"
     },
     {
       "category": "Enviroment Setup",
       "subcategory": "Source Code Artifacts",
       "text": "From the collaboration branch and feature branches artifacts for each part of the Data Factory instance, separated by sub folders.",
-      "guid": "bb91933d-90ca-4e2c-a881-3706f7c0cb9f",
-      "severity": "Medium"
+      "guid": "d0ba73b2-6a5a-457e-aa8d-d4a34377c336"
     },
     {
       "category": "Enviroment Setup",
       "subcategory": "Source Code Artifacts",
       "text": "If publishing the Data Factory instance the publish branch contain a set of ARM templates, one for the instance and one for all parts of the Data Factory.",
-      "guid": "dc8eb9d1-bb73-4b26-a5a6-7eba8ed4b353",
-      "severity": "Medium",
+      "guid": "9b59f6ba-6133-434f-b09d-c23419db6128",
       "link": "https://learn.microsoft.com/azure/data-factory/source-control"
     },
     {
       "category": "Enviroment Setup",
       "subcategory": "Source Code Artifacts",
       "text": "Every time  PR is merged into the develop/main branch, Publish should be run from publish branch otherwise the branch becomes stale and out of sync.Use Overwrite live mode functionality or Disconnect and reconnect Git repository as for fixing the Stale branch issue",
-      "guid": "78c34698-16b2-4763-affe-1b9b599de0d5",
-      "severity": "Medium",
+      "guid": "1269040c-4ba4-4d3e-8804-276d4b98b15c",
       "link": "https://learn.microsoft.com/azure/data-factory/source-control#stale-publish-branch"
     },
     {
       "category": "Enviroment Setup",
       "subcategory": "Deployment",
       "text": "with peer reviews merge changes from developers in the central branch we can then have an automated process to move development to Production",
-      "guid": "973cd4ce-36c0-4c81-97fa-fbc4cfd43918",
-      "severity": "Medium"
+      "guid": "8b31aa5a-ceb5-4888-a135-e227896d31b6"
     },
     {
       "category": "Enviroment Setup",
       "subcategory": "Deployment",
       "text": "Artifacts when merged from feature branch to main branch through reviewed pull requests , publish to generate artifacts in adf_publish branch.",
-      "guid": "548c2847-ec66-4178-a824-445ce1aed345",
-      "severity": "Low"
+      "guid": "7c67ba59-119c-408e-af5d-587c7e9ced16"
     },
     {
       "category": "Enviroment Setup",
       "subcategory": "Deployment",
       "text": "Develop Azure Devops Pipelines for moving code from one environment to another ",
-      "guid": "3aec7239-2376-415d-b58c-5a4b1925383a",
-      "severity": "Low"
+      "guid": "acd176ef-9b24-41a9-a8a6-7ae77b997e81"
     },
     {
       "category": "Enviroment Setup",
       "subcategory": "Deployment",
       "text": "Create and Use Devops Variable groups to pass the environment specific vaues/parameters",
-      "guid": "58a9c279-9c42-4bb6-9d0c-65556246b338",
-      "severity": "Low"
+      "guid": "4ea1dbf3-dd99-4248-8718-d1dca1f62575"
     },
     {
       "category": "Design",
       "subcategory": "Naming Conventions",
       "text": "Its good practise to append a Suffix to the ADF componen to specify the type of component likePilpeline starts with PL_<PipilineName>Linked Service starts with LS_<LinkedServiceName>Dataset starts with DS_<DatasetName>Trigger starts with TR_<TriggerName>Also the component names should give some information about itPipilineName should give a brief of the task it accomplish ex PL_Load_Stage will load data into stagingLinkedServiceName - should specify the source/traget data source type ex LS_Az_SQL_Land will connect to Azure SQL server in the landing zoneDatasetName should give the source/target table or file name ex DS_Land_CustomerTriggerName should specify purpose of run and frequency like Daily,weekly,monthly(H/D/W/M) ex TR_Stage_Hourly",
-      "guid": "563a4dc7-4a74-48b6-922a-d190916a6649",
-      "severity": "Low",
+      "guid": "9ee5680a-3824-49c9-9221-3dbd7fb012f7",
       "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
     },
     {
       "category": "Design",
       "subcategory": "Naming Conventions",
       "text": "ANNOTATIONS - All components within Data Factory now support adding annotations. This builds on the description content by adding information about ?what? your pipeline is doing as well as ?why?",
-      "guid": "8fadfe27-7de2-483b-8ac3-52baa9b75708",
-      "severity": "Low",
+      "guid": "09530631-5832-4ea3-ad2c-2ce632065b3a",
       "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
     },
     {
       "category": "Design",
       "subcategory": "Naming Conventions",
       "text": "Every Pipeline and Activity within Data Factory has a none mandatory description field. start making better use of it. ",
-      "guid": "49aa8092-dc8e-4b9d-8bb7-3b26a5a67eba",
-      "severity": "Low",
+      "guid": "baee4aad-1e8c-439e-ba46-667313c10567",
       "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
     },
     {
       "category": "Design",
       "subcategory": "Naming Conventions",
       "text": "Folders and sub-folders are such a great way to organize our Data Factory components, we should all be using them to help ease of navigation",
-      "guid": "8ed4b353-78c3-4469-a16b-2763cffe1b9b",
-      "severity": "Low",
+      "guid": "4c1e945b-459c-4374-b7ee-71623b375a91",
       "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
     },
     {
       "category": "Design",
-      "subcategory": "Naming Conventions",
-      "text": "Test, UAT, production) do not need to be connected to source control.",
-      "guid": "8ed4b353-78c3-4469-a16b-2763cffe1b9b",
-      "severity": "Low",
+      "subcategory": "Integration Runtimes",
+      "text": "self hosted runtimes (and linked services for that matter) should not have environment specific names i.e. dev runtime is called ‘devruntime’ and the test one is called ‘test runtime’ . Instead have one generic name. ",
+      "guid": "b31f38c4-03a8-422c-8463-cf0f18ac699e",
       "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
     },
     {
       "category": "Design",
-      "subcategory": "Naming Conventions",
-      "text": "Test111, UAT, production) do not need to be connected to source control.",
-      "guid": "8ed4b353-78c3-4469-a16b-2763cffe1b9b",
-      "severity": "Low",
+      "subcategory": "Integration Runtimes",
+      "text": "If different names are followed it’s extra difficult to migrate code - patches to be coded through devops or additional patch needed",
+      "guid": "f1d5a83d-e4de-432c-8881-470607c5c0e4",
       "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Reusable Code",
+      "text": "Dynamic parameter passing pipelines, Linked Services",
+      "guid": "e614658d-2458-4ed6-9139-b821102de26e",
+      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Reusable Code",
+      "text": "Where design allows - use a completely metadata driven dataset for dealing with a particular type of object against a linked service. For example, one dataset of all CSV files from Blob Storage and one dataset for all SQLDB tables.",
+      "guid": "e411e6f8-83e5-42f4-922d-d68c5b5c2521",
+      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Reusable Code",
+      "text": "Pipeline Hierarchy - Use Parent child approach as per levels of the project. ",
+      "guid": "e54a69b9-d339-4ac4-b7c6-8d1d75657202",
+      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Reusable Code",
+      "text": "Where possible generic pipelines these are driven from metadata to simplify (as a minimum) data ingestion operations. Metadata driven approach means deployments to Data Factory for new data sources are greatly reduced and only adding new values to a database table is required",
+      "guid": "b4f4564b-4d97-44a7-99c7-63e7d261613a",
+      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Resuable Code",
+      "text": "The copy activity upsert support ",
+      "guid": "7649907e-0e33-48ee-853c-17d32d8aaab7",
+      "link": "https://learn.microsoft.com/azure/data-factory/connector-azure-sql-database?tabs=data-factory#upsert-data"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Reusable Code",
+      "text": "Use Existing pipeline Templates ",
+      "guid": "571549ab-8153-4d89-b89d-17b84b33b5a6"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Parallel Execution",
+      "text": "For Each activity is a really simple way to achieve the parallel execution of its inner operations. By default, the For Each activity does not run sequentially, it will spawn 20 parallel threads and start them all at once",
+      "guid": "7f7b9ed5-b31f-438c-903a-822c2463cf0f",
+      "link": "https://docs.microsoft.com/azure/data-factory/control-flow-for-each-activity"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Cost",
+      "text": "For a SQLDB, scale it up before processing and scale it down once finished",
+      "guid": "18ac699e-f1d5-4a83-be4d-e32c18814706",
+      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Cost",
+      "text": "For a SQLDW (Synapse SQL Pool), start the cluster before processing, maybe scale it out too. Then pause it after.",
+      "guid": "07c5c0e4-e614-4658-b245-8ed67139b821"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Cost",
+      "text": "For Databricks, create a linked services that uses job clusters.",
+      "guid": "102de26e-e411-4e6f-a83e-52f4722dd68c"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Cost",
+      "text": "Define and allocate daily, weekly and monthly limit to ensure usage within budgeted limits",
+      "guid": "a1a27a76-4a90-4be1-b388-ef294c2bd363",
+      "link": "https://learn.microsoft.com/azure/synapse-analytics/sql/data-processed"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Key Vaults",
+      "text": "Linked Service Security via Azure Key Vault",
+      "guid": "cabac757-1959-4ab9-893e-c9fc9d1cb84c",
+      "link": "https://docs.microsoft.com/azure/data-factory/store-credentials-in-key-vault"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Managed Identities",
+      "text": "Is a great way to allow interoperability between resources without needing an extra layer of Service Principals (SPN’s) or local resource credentials stored in Key Vault.",
+      "guid": "37b5b680-cb9e-4e5b-9548-8d447a826c38",
+      "link": "https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Activity Properties",
+      "text": "Securing Activity inputs and outputs - secure output and Input properties of Activity. 'Set Variable' Activity does not support the securing of  input and output data, avoid using it to set any sensitive data, as this will expose the secrets in the logs and earlier runs data",
+      "guid": "73d00f1c-ac6a-49e0-8d6a-83de5de36c1c"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Activity Properties",
+      "text": "Almost every Activity within Data Factory has the following three settings (timeout, retry, retry interval)- Validate accurately while moving from Dev to Production else result is long running jobs.",
+      "guid": "d5cb5e40-1915-4387-b5ca-9c26d9c42bb6"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Activity Properties",
+      "text": "Always Encrypted support in Data Flows for SQL Sources - property alwaysEncryptedSettings",
+      "guid": "bd0c6999-a246-4f33-a9a7-e42c77d78cb6",
+      "link": "https://learn.microsoft.com/azure/data-factory/connector-azure-sql-database?tabs=data-factory"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Load Testing ",
+      "text": "Test your pipeline by using the copy activity against a representative data sample",
+      "guid": "a22ad19f-916e-4698-b8fa-dfe27bde2870"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Load Testing ",
+      "text": "Dataset should be big enough to evaluate copy performance - Nearby to production size",
+      "guid": "1ac352ba-a9b6-48b0-a8ca-a80922c8eb9d"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Load Testing ",
+      "text": "Collect execution details and performance characteristics with default values and follow below measures to improve",
+      "guid": "1bb77f26-e5e6-4beb-a8ed-4f3537cc346d"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Self-Hosted IR",
+      "text": " Use dedicated machine to host IR. The machine should be separate from the server hosting the data store.",
+      "guid": "816027a7-1efe-41b9-a5d9-de0d5d731d41"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Self-Hosted IR",
+      "text": "if possible configure Mutiple nodes  - it helps on Higher availablity and Improved performance and throughput during data movement between on-premises and cloud data stores. ",
+      "guid": "d2500c81-7bf9-4eac-91fd-3390898bc288",
+      "link": "https://learn.microsoft.com/azure/data-factory/create-self-hosted-integration-runtime?tabs=data-factory#scale-up"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Self-Hosted IR",
+      "text": "When processor and available RAM aren't well utilized, but the execution of concurrent jobs reaches a node's limits, scale up by increasing the number of concurrent jobs that a node can run",
+      "guid": "e209d4a0-ea57-4778-924d-216785d2fa56",
+      "link": "https://learn.microsoft.com/azure/data-factory/create-self-hosted-integration-runtime?tabs=data-factory#scale-up"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Parallel copy(start with default values and monitor and then increase)",
+      "text": "if required You can set parallel copy  or Degree of parallelism setting in the Settings tab of the Copy activity properties in the user interface) on copy activity to indicate the parallelism that you want the copy activity to use. ",
+      "guid": "c56ad485-18fe-4827-94c4-86ba280dc059",
+      "link": "https://learn.microsoft.com/azure/data-factory/copy-activity-performance-features#staged-copy"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Parallel copy(start with default values and monitor and then increase)",
+      "text": "property as the maximum number of threads within the copy activity that read from your source or write to your sink data stores in parallel.",
+      "guid": "1cf75ee9-e130-49cc-ad57-9366bcda2750",
+      "link": "https://learn.microsoft.com/azure/data-factory/copy-activity-performance-features#staged-copy"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Staged copy",
+      "text": "A data copy operation can send the data directly to the sink data store. Alternatively, you can choose to use Blob storage as an interim staging store.",
+      "guid": "ab1ab0e9-d55d-414c-9c49-29cb1b3d1325"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Staged copy",
+      "text": "Propert  is uselful - want to ingest data from various data stores into Azure Synapse Analytics via PolyBase,",
+      "guid": "ae125ba3-4d06-485e-bdce-abe3bb0ddb3c",
+      "link": "https://learn.microsoft.com/azure/data-factory/connector-azure-sql-data-warehouse?tabs=data-factory#use-polybase-to-load-data-into-azure-synapse-analytics"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Monitor Copy ",
+      "text": "Monitor Copy Activity stats ",
+      "guid": "55fb2ec1-4eea-4a35-a282-9e2edb217368",
+      "link": "https://learn.microsoft.com/azure/data-factory/copy-activity-performance-troubleshooting"
+    },
+    {
+      "category": "Logging",
+      "subcategory": "Log Analytics",
+      "text": "All the logs from each pipeline run in debug mode or trigger mode can be routed to log analytics.This needs to be done at the ADF instance/workspace level. The logs can be monitored used  Kusto(KQL) from Log Analytics log tab",
+      "guid": "6aff6791-b493-45ad-a423-24ece81c1231"
+    },
+    {
+      "category": "Logging",
+      "subcategory": "Error Handling ",
+      "text": "redirect the failed rows to a separate sink or a file",
+      "guid": "c5ea85b8-6ac8-474f-ae37-2724b875aa17",
+      "link": "https://learn.microsoft.com/azure/data-factory/data-flow-assert#direct-assert-row-failures"
+    },
+    {
+      "category": "Logging",
+      "subcategory": "Custom Logging",
+      "text": "Custom logging can be implemented using Stored Procedure and Azure SQL. The framework needs to to setup once and each activity should call the success or failure SP to update the log information in the tables",
+      "guid": "f10449f0-364d-428e-93e9-bbbc868265ab"
+    },
+    {
+      "category": "Logging",
+      "subcategory": "Alerts",
+      "text": "Use Data fatory workspace/Log Analytics alerts to send email notification on the status of pipeline runs.There are predefined set of 27 criterias which can be used to create the alerts. Example - Integration runtime utilization, Pipeline runs , Trigger runs ",
+      "guid": "c9264e9a-19ae-428c-a5c4-3c6b7818ca0e",
+      "simple": 1,
+      "link": "https://learn.microsoft.com/azure/data-factory/monitor-metrics-alerts"
+    },
+    {
+      "category": "Debuging",
+      "subcategory": "Breakpoints",
+      "text": "ADF debug feature to perform basic end to end testing of newly created pipelines and using break points on activities as required",
+      "guid": "6c42149d-514b-4933-b357-4d11129bd7aa",
+      "scale": 1
+    },
+    {
+      "category": "Debuging",
+      "subcategory": "Debug Parameters",
+      "text": "rerun Pipeline Rerun with new parameters - Pipeline parameters can now be changed when re-running a pipeline from the Monitoring page without returning to the pipeline editor",
+      "guid": "f12e6b94-ef5e-4f43-b299-2581718d6d1f",
+      "scale": 1,
+      "simple": -1,
+      "link": "https://learn.microsoft.com/azure/data-factory/monitor-visually#rerun-pipelines-and-activities"
     }
   ],
   "categories": [

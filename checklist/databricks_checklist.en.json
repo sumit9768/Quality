@@ -1,0 +1,643 @@
+{
+  "items": [
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "No syntax issues warnings and errors should not throw at runtime.",
+      "guid": "b262d6cc-5f51-4292-9398-e6db9d37dac4"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "The unused code block should not be compiled. It should not be placed in the code file.",
+      "guid": "3bc6cd1d-79a9-4b24-9044-89a8f42d78e7"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Aviod print statements use the logging module>>> import logging >>> logger = logging.getLogger('logger_name')",
+      "guid": "8cb7a33b-d2a0-4917-b7a8-d90ae0e37cee"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "If any python function created make sure it has proper annotations (that are a type of safe).",
+      "guid": "29711bd3-52ca-4aab-99b1-98dab81932c9"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Exception Handling :Make sure the code handles the exceptions correctly and it should print the error message properly. (Try Catch Finally)",
+      "guid": "fc9d1bb7-8036-4f5e-9bfb-b9ed503547cc"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Uniform coding standard is followed throughout the files (example: use existing reusable components instead of creating the new functions/methods for each use case).- Function Overloading, Function Overriding etc.",
+      "guid": "403a4d2c-d463-4cbb-ac86-8295abc91a4e"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "While using the recursive function with spark usage make sure it has a proper break statement else it will eat all the resources.",
+      "guid": "da0dae2c-c84c-447b-9b78-1cbafe6c4658"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Each module, method, class, function should have the dot strings (python standard).",
+      "guid": "9d458a92-7c39-474d-8102-dad6aae11e6b"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Spark configurations should not be on regular python files because the configurations will change based on the environment.",
+      "guid": "84ee5df4-7d2d-4928-a1b1-cd5d1e54a297"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Secrets like Usernames, Password, Hostnames etc must be stored in Azure key vault",
+      "guid": "59e39680-e782-489c-a356-57d02bff4564"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Use Databricks Widgets for all the parameters used in the code. Avoid hardcoded values try to call parameters or variable from config or ini file.",
+      "guid": "b0d934a3-4873-46ee-99d6-c6c3a36495b6"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Must avoid hardcoded value in the SparkSQL/PySpark code, declare variables or parameterized the values in the Notebook. Make sure the SQL is formatted. ",
+      "guid": "abae38aa-d53c-4c79-b2d8-6667357c5496"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Don't Loop the datasets (for or while loop). Looping can be used to create multiple dataframes on multiple datasets or If the requirement is to do some column renaming and removing the spaces.",
+      "guid": "74c5ed85-b859-4c77-94be-2b1a27b775a9"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Once, after the pyspark action completed if any object cached, unpersist the object so the memory will reallocate for other actions(garbage collection).",
+      "guid": "1be1f388-f03a-44d2-ad46-3cbbbc868295"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Optimize using join  to make PySpark code faster:- Broadcast join : One side of the datasets in the join is fairly small. (The threshold can be configured using “spark. sql. autoBroadcastJoinThreshold” which is by default 10MB)- Sort Merge Join: This is the standard join type, suitable when datasets on both sides of the join are medium/large. This join happens in 3 stages: Shuffle Partitions, Sorting within each partition and join the sorted partition",
+      "guid": "6785c6fa-96b9-46ad-a840-8f372734c876"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Data Skewness in the data gives the error as mentioned below.Error messages don’t mean what they say and we had to do multiple optimizations to fix the issue.Few steps which can help to overcome the data skewnessa) Replace join of A and B with : ((A where join column is non-null) joined with (B ) ) UNION with (A where join column is null). This is for cases where apart from null values, other values in the join column are uniformly distributed. A more generic approach is discussed in b).b) Add random numbers to the join column: Here we add some random value to the join key to make it distributed.In Table A( which has skewness): Concatenate with some character and append some random number in the range (1,3). key -> key+”_”+random(1,3)In Table B( which has uniform distribution): Explode one row into three with join keys being x_1, x_2, and x_3 in them. Post this we see that all partitions are uniform sized now as there is no skewness in the new join column now and join completes much faster.",
+      "guid": "ba280214-5901-4465-b38e-53f9ccbd9692"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Keep Input Data Lean: If the join is becoming too slow, remove columns from the data which are not required post joining. Write this intermediate data somewhere and read this as input in the join step. This will reduce the size of the data that moves across the network during data shuffling. ",
+      "guid": "66bcca27-4faa-419b-b39d-95d44c7c8919"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "In places where an empty column is required to be added to satisfy the schema, always use F.lit(None) function for populating empty column. Never use an empty string or other value that represent empty like “NA”, “N/A”, “Nil”. Though it is semantically right to use so, the primary reason for recommending to use F.lit(None) is to preserve the ability to use utilities like isNull, instead of verifying empty string, “NA”, “N/A”, “Nil”.",
+      "guid": "ca1f6d53-15ae-4524-aa34-d4585e12139b"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Refactor complex chaining of expressions. It’s recommended to apply multi-line expressions with different types, especially if they have different behaviours and context. Example is, mixing column creation or joining with selecting and filtering.",
+      "guid": "d7bb012f-7b95-4e06-b154-e2aa3592828e"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Use select statement to specify a schema contract. Doing a select at the beginning of the transform, or before returning, is considered a good practice. Any select should be seen as a cleaning operation that is preparing the dataframe for consumption by the next step in the transform.Keep select statements as simple as possible. Due to common SQL idioms, allow only one function from spark.sql.function to be used per selected column, plus an optional .alias() to give it a meaningful name.",
+      "guid": "6e205172-676a-4e46-991e-8835ad942223"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Coding",
+      "text": "Instead of using withColumnRenamed(), use aliases. Also, instead of using withColumn() to redefine type, cast it in the select.",
+      "guid": "e1381052-3081-4a94-8741-5833ff7ad7c6"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Indentation",
+      "text": "Use 4 spaces for each indentation level. Continuation lines should align the wrapped elements vertically as hanging indent. While using hanging indent, there should be no arguments in the first line and further indentation should be used to clearly distinguish it as a continuation line.",
+      "guid": "d3733165-c7ac-4be4-9bbe-609d89f2e877"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Indentation",
+      "text": "Adding two blank lines before functions and classes",
+      "guid": "34fdf91c-2341-482b-9527-5269440b4be3"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Indentation",
+      "text": "Top level function and classes are separated with two blank lines",
+      "guid": "d3e08432-76d4-4bdc-815b-cf219e4a1eb5"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Indentation",
+      "text": "Method definitions inside class should be separated with one blank line",
+      "guid": "8879535d-2278-486d-90b6-6c57be595190"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Indentation",
+      "text": "Extra blank lines may be used sparingly to separate a group of related functions",
+      "guid": "083845c5-86cb-4291-bc16-a1d076ef9f14"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Indentation",
+      "text": "Use blank lines in functions sparingly, to indicate logical sections",
+      "guid": "1acdce57-9377-4bcd-a375-1ab2ac1fad66"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Limiting Line Lengths",
+      "text": "Limit all lines to a maximum of 79 characters",
+      "guid": "e15d4d4a-2adb-41c3-b232-6af225ca44e1"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Limiting Line Lengths",
+      "text": "For flowing long blocks of text with fewer structural restrictions (docstrings or comments), the line length should be restricted to 72 characters",
+      "guid": "695fddde-ace4-4cb1-beb4-c650c3fc14ee"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Imports",
+      "text": "Imports should usually be in separate lines",
+      "guid": "88147060-7c1c-4ca0-b614-658dd558f937"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Imports",
+      "text": "Wildcard imports should be avoided, as it will not give a clear picture of what names present in namespace",
+      "guid": "139b8211-12db-4d6e-af12-e6f943e53f47"
+    },
+    {
+      "category": "Naming Convention",
+      "subcategory": "Function",
+      "text": "Use lower case variables separated with underscores",
+      "guid": "22d929c1-b1cd-4621-b54b-29bade39ac0e"
+    },
+    {
+      "category": "Naming Convention",
+      "subcategory": "Variable",
+      "text": "Use lowercase letters or word, or word separated with underscores",
+      "guid": "7c28ec93-6657-4202-aff4-564b0d944a35"
+    },
+    {
+      "category": "Naming Convention",
+      "subcategory": "Class",
+      "text": "Use Pascal casing. Keep first letter of each sentence in uppercase. Do not separate words with underscores",
+      "guid": "9c373e7d-d616-423a-964a-907ebae48ead"
+    },
+    {
+      "category": "Naming Convention",
+      "subcategory": "Method",
+      "text": "Use lower case words separated with underscores",
+      "guid": "54cd7de2-e8ab-4ab3-9715-59ab9153d89f"
+    },
+    {
+      "category": "Naming Convention",
+      "subcategory": "Constant",
+      "text": "Use upper case letter, word or words separated with underscore",
+      "guid": "89dc7b44-ce3b-41a2-a08b-9ea1be1038df"
+    },
+    {
+      "category": "Naming Convention",
+      "subcategory": "Module",
+      "text": "Use short lower-case words separated with underscores",
+      "guid": "0364dd8a-02e9-4777-a468-d55a785d6fe9"
+    },
+    {
+      "category": "Naming Convention",
+      "subcategory": "Package",
+      "text": "Use short lower-case words without underscores",
+      "guid": "6c96ad88-44cf-43c2-a38c-886ba2c02149"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Protect Azure resources within virtual networks",
+      "text": "Deploy Azure Databricks in your own Azure virtual network (VNet).A network security group (NSG) is not created automatically. You are required to create a baseline NSG with default Azure rules only.",
+      "guid": "9114b5e3-ce57-44dc-acd9-793a6bcda2b5"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Monitor and log the configuration and traffic of virtual networks, subnets, and network interfaces",
+      "text": "UseLog Analytics workspace and use Traffic Analytics to provide insights into traffic flow in your Azure cloud.",
+      "guid": "0ea1ebf3-dd95-4d58-a7c8-92dcb107d576"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Deny communications with known-malicious IP addresses",
+      "text": "Enable Azure DDoS Protection Standard on the Azure Virtual Networks associated with your Azure Databricks instances for protection against distributed denial-of-service attacks.",
+      "guid": "9ae568ba-38d4-4a85-b221-3dbd7bb012f7"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Minimize complexity and administrative overhead of network security rules",
+      "text": "Use Service Tags to define network access controls on Network Security Groups that are attached to the Subnets your Azure Databricks instance is associated with. ",
+      "guid": "b95f06e1-58e3-4ea3-a92c-2de6e2065b3a"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Configure security log storage retention",
+      "text": "Enable diagnostic settings for Azure Databricks. If choosing to store logs in a Log Analytics Workspace, set your Log Analytics Workspace retention period according to your organization's compliance regulations",
+      "guid": "76af4a79-1f89-439a-ba46-768e13c11567"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Enable alerts for anomalous activities",
+      "text": "In your Log Analytics workspace, configure alerts to take place when a pre-defined set of conditions takes place",
+      "guid": "5c1e9417-0154-4e3b-a46a-3829f7f31628"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Maintain an inventory of administrative accounts",
+      "text": "use Azure Databricks SCIM APIs to manage users in an Azure Databricks workspace and grant administrative privileges to designated users. You can also manage them through the Azure Databricks UI.",
+      "guid": "3787a057-7a20-4994-9bda-53334f249216"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Use Azure Active Directory single sign-on (SSO)",
+      "text": "Azure Databricks is automatically set up to use Azure Active Directory (Azure AD) single sign-on to authenticate users.You can implement SCIM to automate provisioning and de-provisioning users from workspaces.",
+      "guid": "34192ba5-2852-4694-9008-be8d7e484427"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Use multi-factor authentication for all Azure Active Directory-based access",
+      "text": "Enable Azure Active Directory (Azure AD) multifactor authentication and follow Microsoft Defender for Cloud Identity and Access Management recommendations.",
+      "guid": "6d8bdc05-5ccf-471a-b8a1-3098889535e6"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Encrypt all sensitive information in transit",
+      "text": "Microsoft will negotiate TLS 1.2 by default when administering your Azure Databricks instance through the Azure portal or Azure Databricks console. Databricks Web App supports TLS 1.3.",
+      "guid": "27896d71-ba6c-4a7b-b995-191483845d98"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Encrypt sensitive information at rest",
+      "text": "An Azure Databricks workspace comprises a management plane that is hosted in an Azure Databricks managed virtual network and a data plane that is deployed in a customer-managed virtual network. The control plane stores all users’ notebooks and associated notebook results in a database. By default, all notebooks and results are encrypted at rest with a different encryption key.",
+      "guid": "7cb39132-56a1-4247-9e49-0641addce97a"
+    },
+    {
+      "category": "Cluster Configuration",
+      "subcategory": "Cluster Types",
+      "text": "Chose the cluster according to need - All purpose cluster or Job cluster while configuring",
+      "guid": "377bcdb3-751b-4b2a-a14a-ea6e55d8d9a2"
+    },
+    {
+      "category": "Cluster Configuration",
+      "subcategory": "Different Cluster Mode",
+      "text": "Chose wisely in the given cluster mode :  Standard, Single node, High Concurrency- Standard: Standard clusters are recommended for single users only. Sometimes called No Isolation Shared clusters can be shared by multiple users, with no isolation between users.- High-concurrency, these are tuned to provide the most efficient resource utilisation, isolation, security and performance for sharing by multiple concurrently active users. Databricks recommends alternatives such as high concurrency clusters with Table ACLs.",
+      "guid": "697dc3a2-fd27-4b2e-8870-1a1252bdedf6"
+    },
+    {
+      "category": "Cluster Configuration",
+      "subcategory": "Different Cluster Mode",
+      "text": "Autoscaling feature must be enabled resize automatically based on workloads",
+      "guid": "8a488cde-c486-42bc-9bc1-0ae77f26e4d5"
+    },
+    {
+      "category": "Cluster Configuration",
+      "subcategory": "Pool",
+      "text": "Databricks recommends taking advantage of pools to improve processing time while minimizing cost",
+      "guid": "b3bec2d4-e343-46b1-936d-b55f27961eee",
+      "security": 1,
+      "simple": -1
+    },
+    {
+      "category": "Cluster Configuration",
+      "subcategory": "Pool",
+      "text": "Pool is recommended in the Real time project scenario. Azure Databricks pools reduce cluster start and scale-up times",
+      "guid": "0bd05dc2-efc5-4d76-8d41-d2500bb47a49",
+      "scale": 1
+    },
+    {
+      "category": "Cluster Configuration",
+      "subcategory": "Pool",
+      "text": "Create pools using instance types and Azure Databricks runtimes based on target workloads.",
+      "guid": "3a040fd3-2947-498b-8188-b3c6a56ceb54",
+      "security": 1,
+      "simple": -2
+    },
+    {
+      "category": "Cluster Configuration",
+      "subcategory": "Pool",
+      "text": "When possible, populate pools with spot instances to reduce costs.",
+      "guid": "223ece80-b123-4081-a541-7415833ea3ad",
+      "security": 1,
+      "simple": -2
+    },
+    {
+      "category": "Cluster Configuration",
+      "subcategory": "Pool",
+      "text": "Populate pools with on-demand instances for jobs with short execution times and strict execution time requirements.",
+      "guid": "3c2de733-165c-43ac-ae04-bbe209d39fda",
+      "scale": 1,
+      "simple": -1
+    },
+    {
+      "category": "Cluster Configuration",
+      "subcategory": "Pool",
+      "text": "Use pool tags and cluster tags to manage billing.",
+      "guid": "47778424-c116-4785-a2fa-55b56ad48408",
+      "scale": 1,
+      "simple": -1
+    },
+    {
+      "category": "Cluster Configuration",
+      "subcategory": "Pool",
+      "text": "Use pool configuration options to minimize cost. For Ex. Set the Min Idle instances to 0 to avoid paying for running instances that aren’t doing work. ",
+      "guid": "ba3d3e08-0327-46d4-a98b-15b8a219a4ac",
+      "scale": 1,
+      "simple": -1
+    },
+    {
+      "category": "Cluster Configuration",
+      "subcategory": "Pool",
+      "text": "Pre-populate pools to make sure instances are available when clusters need them.",
+      "guid": "eb588790-24d2-4267-a6d2-0b66c57ba591",
+      "security": 2,
+      "simple": -2
+    },
+    {
+      "category": "Databricks Repo",
+      "subcategory": "Development Repo",
+      "text": "A best practice is to create a new feature branch or select a previously created branch for your work, instead of directly committing and pushing changes to the main branch. You can make changes, commit, and push changes in that branch. When you are ready to merge your code, create a pull request and follow the review and merge processes in your Git provider.",
+      "guid": "19bf8e8f-5c58-46c7-b9cd-c16acc076ef9",
+      "security": 1,
+      "simple": -1
+    },
+    {
+      "category": "Databricks Repo",
+      "subcategory": "Development workflow with Repos",
+      "text": "Clone your existing Git repository to your Databricks workspace.",
+      "guid": "b141a898-a579-4e77-a897-e710a7da7be9",
+      "security": 1,
+      "simple": -1
+    },
+    {
+      "category": "Databricks Repo",
+      "subcategory": "Development workflow with Repos",
+      "text": "Use the Repos UI to create a feature branch from the main branch. This example uses a single feature branch feature-b for simplicity. You can create and use multiple feature branches to do your work.",
+      "guid": "966e15d3-c4ad-4a97-ac3d-2325ab225c6f",
+      "security": 1,
+      "simple": -1
+    },
+    {
+      "category": "Databricks Repo",
+      "subcategory": "Development workflow with Repos",
+      "text": "Make your modifications to Azure Databricks notebooks and other files in the Repo.",
+      "guid": "0ac241b9-99a6-446f-9389-a7f82cb8eb8c",
+      "security": 1
+    },
+    {
+      "category": "Databricks Repo",
+      "subcategory": "Development workflow with Repos",
+      "text": "Commit and push your changes to your Git provider.",
+      "guid": "0aa62a25-a495-46ea-a8dc-4a24367b3369",
+      "security": 1,
+      "simple": -1
+    },
+    {
+      "category": "Databricks Repo",
+      "subcategory": "Development workflow with Repos",
+      "text": "Coworkers can now clone the Git repository into their own user folder.",
+      "guid": "715a1752-beee-40b9-a588-defc4972cc3c",
+      "security": 2,
+      "cost": -1,
+      "simple": -1
+    },
+    {
+      "category": "Databricks Repo",
+      "subcategory": "Development workflow with Repos",
+      "text": "Working on a new branch, a coworker makes changes to the notebooks and other files in the Repo.",
+      "guid": "d25bfb70-76e9-4eab-9bed-329f7547c174",
+      "security": 2,
+      "cost": -2
+    },
+    {
+      "category": "Databricks Repo",
+      "subcategory": "Development workflow with Repos",
+      "text": "The coworker commits and pushes their changes to the Git provider.",
+      "guid": "6dc56068-a714-4435-ad19-dddf0d5973dd",
+      "security": 2,
+      "cost": -2
+    },
+    {
+      "category": "Databricks Repo",
+      "subcategory": "Development workflow with Repos",
+      "text": "To merge changes from other branches or rebase the feature branch, you must use the Git command line or an IDE on your local system. Then, in the Repos UI, use the Git dialog to pull changes into the feature-b branch in the Databricks Repo.",
+      "guid": "4ce32c18-8137-406f-9c4c-0d4e514548d2",
+      "security": 1,
+      "simple": -2
+    },
+    {
+      "category": "Databricks Repo",
+      "subcategory": "Development workflow with Repos",
+      "text": "When you are ready to merge your work to the main branch, use your Git provider to create a PR to merge the changes from feature-b.",
+      "guid": "457ed671-38b8-4201-82ce-16ee301e6e88",
+      "simple": -1,
+      "ha": 1
+    },
+    {
+      "category": "Databricks Repo",
+      "subcategory": "Development workflow with Repos",
+      "text": "In the Repos UI, pull changes to the main branch.",
+      "guid": "2e52e361-1dd6-48c5-a4b2-521e44a59a9c",
+      "simple": -1,
+      "ha": 1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Delete temporary tables after notebook execution",
+      "guid": "0177a2b5-945b-4da4-9334-fdf91c234192",
+      "simple": 1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Use dbutils.fs.rm()to permanently delete temporary table metadata",
+      "guid": "b6528526-9440-4b4b-b3d3-e0844276d4bd",
+      "simple": 1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Use Scala for data processingADB’s data processing is based on Apache Spark, which is written in Scala. As a result, Scala performs better than SQL in ADB. Note: Python should still be used for machine learning functions in ADB",
+      "guid": "c015bcf2-19e4-4a1e-a588-79535d227886",
+      "security": 1,
+      "simple": -1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Use Delta tables for DML commands",
+      "guid": "d30b66c6-7be5-4951-a008-3845c587cb39",
+      "simple": -1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Use views when creating intermediate tables as they are session oriented. For optimal query performance, do not use joins or subqueries in views.",
+      "guid": "1ed16a1d-076e-4f9f-841a-ddce579377bc",
+      "security": 1,
+      "simple": -1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "1. Use key vault credentials when creating mount points",
+      "guid": "97e31c67-d68c-4b6a-82ac-19f916d697d8"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Query directly on parquet files from ADLS: If you need to use the data from parquet files, do not extract into ADB in intermediate table format. Instead, directly query on the parquet file to save time and storage. Example:SELECT ColumnName FROM parquet.`Location of the file`",
+      "guid": "eaded27b-dd18-46f1-ac25-2b999a68af87"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Specify distribution when publishing data to Azure Data Warehouse (ADW)Use hash distribution for fact tables or large tables, round robin for dimensional tables, replicated for small dimensional tables. Example:df.write \\\\.format('com.databricks.spark.sqldw') \\\\.option('url', 'jdbc:sqlserver://') \\\\.option('forwardSparkAzureStorageCredentials', 'true') \\\\.option('dbTable', 'my_table_in_dw_copy') \\\\.option('tableOptions', 'table_options') \\\\.save()",
+      "guid": "c9a8f821-b8eb-48c0-aa77-e26e4d5aeba8",
+      "security": 1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Customize cluster termination time",
+      "guid": "dc4e2436-bc33-46d7-85f1-7960eee0b9b5",
+      "security": 1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Enable cluster autoscaling: ADB offers cluster autoscaling, which is disabled by default. Enable this feature to enhance job performance.",
+      "guid": "849ab819-3dc9-4fc9-b1bb-73b36a5a67fb",
+      "simple": 1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Use Azure Data Factory (ADF) to run ADB notebook jobs: If you run numerous notebooks daily, the ADB job scheduler will not be efficient. The ADB job scheduler cannot set notebook dependency, so you would have to store all notebooks in one master, which is difficult to debug. Instead, schedule jobs through Azure Data Factory, which enables you to set dependency and easily debug if anything fails.",
+      "guid": "b9ed5b35-478c-4447-a816-b2863cfff1ca",
+      "simple": -1,
+      "ha": 1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Enable adaptive query execution (AQE): To enable it, use: set spark.sql.adaptive.enabled = true;",
+      "guid": "c599ef0d-5a83-4dd4-be36-c1c81770afbc",
+      "simple": -1,
+      "ha": 1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Modularity: When a project moves past its early prototype stage, it is time to refactor the code into modules that are easier to share, test, and maintain.",
+      "guid": "4c0e43a1-8658-4d28-97ed-67179b825546"
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Robust version control and code review process. In order to manage the process of updating, releasing, or rolling back changes to code over time, Databricks Repos makes integrating with many of the most popular Git providers simple. It also provides a clean UI to perform typical Git operations like commit, pull, and merge. An existing notebook, along with any accessory code (like python utilities), can easily be added to a Databricks repo for source control integration.",
+      "guid": "8ac6aae0-1e6a-484d-b5df-43d299248171",
+      "cost": -1,
+      "ha": 1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Developers can also use the %autoreload magic command to ensure that any updates to modules in .py files are immediately available in Databricks",
+      "guid": "8d5d1e5f-6256-459e-9558-0e78249c9312",
+      "cost": 1,
+      "simple": -1
+    },
+    {
+      "category": "Enviroment Setup",
+      "subcategory": "&nbsp",
+      "text": "Unit and Integration Testing: To unit test notebooks using Databricks, we can leverage typical Python testing frameworks like pytest to write tests in a Python file. Below is the code snippet as use case",
+      "guid": "12d027fe-412f-4709-a3f6-304722ee79d6",
+      "scale": 1,
+      "simple": -1
+    }
+  ],
+  "categories": [
+    {
+      "name": "Enviroment Setup"
+    },
+    {
+      "name": "Design"
+    },
+    {
+      "name": "Security"
+    },
+    {
+      "name": "Performance"
+    },
+    {
+      "name": "Logging"
+    },
+    {
+      "name": "Data Masking"
+    },
+    {
+      "name": "Code"
+    }
+  ],
+  "status": [
+    {
+      "name": "Not verified",
+      "description": "This check has not been looked at yet"
+    },
+    {
+      "name": "Open",
+      "description": "There is an action item associated to this check"
+    },
+    {
+      "name": "Fulfilled",
+      "description": "This check has been verified, and there are no further action items associated to it"
+    },
+    {
+      "name": "Not required",
+      "description": "Recommendation understood, but not needed by current requirements"
+    },
+    {
+      "name": "N/A",
+      "description": "Not applicable for current design"
+    }
+  ],
+  "severities": [
+    {
+      "name": "High"
+    },
+    {
+      "name": "Medium"
+    },
+    {
+      "name": "Low"
+    }
+  ],
+  "metadata": {
+    "name": "Use the 'Import latest checklist' button to get the latest version of a review checklist"
+  }
+}
+

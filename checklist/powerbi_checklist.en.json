@@ -1,137 +1,439 @@
 {
   "items": [
     {
-      "category": "Enviroment Setup",
-      "subcategory": "SVN & resources",
-      "text": "Separation of resources for development, testing and production",
-      "guid": "75285279-541c-45bf-9d4e-1854277d4cdc",
-      "severity": "High"
-    },
-    {
-      "category": "Enviroment Setup",
-      "subcategory": "SVN & resources",
-      "text": "Development enviroment connected to source control as a minimum",
-      "guid": "116cc031-ae5b-41fb-9888-9535e327896e",
-      "severity": "Medium"
-    },
-    {
-      "category": "Enviroment Setup",
-      "subcategory": "SVN & resources",
-      "text": "Test, UAT, production) do not need to be connected to source control.",
-      "guid": "31b67d67-be59-4529-8093-845d597cb391",
-      "severity": "Medium"
-    },
-    {
-      "category": "Enviroment Setup",
-      "subcategory": "SVN & resources",
-      "text": "Multiple Data Factory instances to be used - separate business processes , regional regulations etc",
-      "guid": "bad37ead-53cc-46ce-8d7a-aab3571449ab",
-      "severity": "High"
-    },
-    {
-      "category": "Enviroment Setup",
-      "subcategory": "SVN & resources",
-      "text": "Development service should be used with multiple code repository branches i.e. Feature that align to backlog/developer features.",
-      "guid": "8053d88e-89dc-47b3-9be2-a1a27f7a9e91",
-      "severity": "Medium"
-    },
-    {
-      "category": "Enviroment Setup",
-      "subcategory": "SVN & resources",
-      "text": "Pull requests of feature branches would be peer reviewed before merging into the main delivery ",
-      "guid": "be1f38ce-f298-412b-b463-cbbac79c199d",
-      "severity": "Medium"
-    },
-    {
-      "category": "Enviroment Setup",
-      "subcategory": "Source Code Artifacts",
-      "text": "From the collaboration branch and feature branches artifacts for each part of the Data Factory instance, separated by sub folders.",
-      "guid": "bb91933d-90ca-4e2c-a881-3706f7c0cb9f",
-      "severity": "Medium"
-    },
-    {
-      "category": "Enviroment Setup",
-      "subcategory": "Source Code Artifacts",
-      "text": "If publishing the Data Factory instance the publish branch contain a set of ARM templates, one for the instance and one for all parts of the Data Factory.",
-      "guid": "dc8eb9d1-bb73-4b26-a5a6-7eba8ed4b353",
-      "severity": "Medium",
-      "link": "https://learn.microsoft.com/azure/data-factory/source-control"
-    },
-    {
-      "category": "Enviroment Setup",
-      "subcategory": "Source Code Artifacts",
-      "text": "Every time  PR is merged into the develop/main branch, Publish should be run from publish branch otherwise the branch becomes stale and out of sync.Use Overwrite live mode functionality or Disconnect and reconnect Git repository as for fixing the Stale branch issue",
-      "guid": "78c34698-16b2-4763-affe-1b9b599de0d5",
-      "severity": "Medium",
-      "link": "https://learn.microsoft.com/azure/data-factory/source-control#stale-publish-branch"
-    },
-    {
-      "category": "Enviroment Setup",
-      "subcategory": "Deployment",
-      "text": "with peer reviews merge changes from developers in the central branch we can then have an automated process to move development to Production",
-      "guid": "973cd4ce-36c0-4c81-97fa-fbc4cfd43918",
-      "severity": "Medium"
-    },
-    {
-      "category": "Enviroment Setup",
-      "subcategory": "Deployment",
-      "text": "Artifacts when merged from feature branch to main branch through reviewed pull requests , publish to generate artifacts in adf_publish branch.",
-      "guid": "548c2847-ec66-4178-a824-445ce1aed345",
-      "severity": "Low"
-    },
-    {
-      "category": "Enviroment Setup",
-      "subcategory": "Deployment",
-      "text": "Develop Azure Devops Pipelines for moving code from one environment to another ",
-      "guid": "3aec7239-2376-415d-b58c-5a4b1925383a",
-      "severity": "Low"
-    },
-    {
-      "category": "Enviroment Setup",
-      "subcategory": "Deployment",
-      "text": "Create and Use Devops Variable groups to pass the environment specific vaues/parameters",
-      "guid": "58a9c279-9c42-4bb6-9d0c-65556246b338",
-      "severity": "Low"
+      "category": "Design",
+      "subcategory": "Consistency ",
+      "text": "In general, people read left to right, top to bottom( unless any specific requirement e.g. Arabic content). Discuss and finalize the canvas size of the report page (as per the requirement & choice of visualizations, alignment etc.) and use the same across solution for consistency.",
+      "guid": "4e614658-d245-48ed-9713-9b821102de26"
     },
     {
       "category": "Design",
-      "subcategory": "Naming Conventions",
-      "text": "Its good practise to append a Suffix to the ADF componen to specify the type of component likePilpeline starts with PL_<PipilineName>Linked Service starts with LS_<LinkedServiceName>Dataset starts with DS_<DatasetName>Trigger starts with TR_<TriggerName>Also the component names should give some information about itPipilineName should give a brief of the task it accomplish ex PL_Load_Stage will load data into stagingLinkedServiceName - should specify the source/traget data source type ex LS_Az_SQL_Land will connect to Azure SQL server in the landing zoneDatasetName should give the source/target table or file name ex DS_Land_CustomerTriggerName should specify purpose of run and frequency like Daily,weekly,monthly(H/D/W/M) ex TR_Stage_Hourly",
-      "guid": "563a4dc7-4a74-48b6-922a-d190916a6649",
-      "severity": "Low",
-      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+      "subcategory": "Background colors",
+      "text": "White or light backgrounds are printer friendly, ensuring our reports can be easily shared online and offline.",
+      "guid": "ee411e6f-883e-452f-9722-dd68c5b5c252"
     },
     {
       "category": "Design",
-      "subcategory": "Naming Conventions",
-      "text": "ANNOTATIONS - All components within Data Factory now support adding annotations. This builds on the description content by adding information about ?what? your pipeline is doing as well as ?why?",
-      "guid": "8fadfe27-7de2-483b-8ac3-52baa9b75708",
-      "severity": "Low",
-      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+      "subcategory": "Shorten numbers",
+      "text": "At most, show up to four numerals when displaying numbers. Be consistent across decimal points, limiting measures to two numerals to the right of the decimal point. When necessary, scale for thousands or millions.",
+      "guid": "64a90be0-e388-4ef2-a4c2-bd363cabac75"
     },
     {
       "category": "Design",
-      "subcategory": "Naming Conventions",
-      "text": "Every Pipeline and Activity within Data Factory has a none mandatory description field. start making better use of it. ",
-      "guid": "49aa8092-dc8e-4b9d-8bb7-3b26a5a67eba",
-      "severity": "Low",
-      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+      "subcategory": "Tooltips",
+      "text": "Report tooltips are a great way of sharing additional information in a limited report space. Limit which visuals we use in report tooltips to ensure information isn’t overwhelming.",
+      "guid": "71959ab9-193e-4c9f-a9d1-bb84c37b5a68"
     },
     {
       "category": "Design",
-      "subcategory": "Naming Conventions",
-      "text": "Folders and sub-folders are such a great way to organize our Data Factory components, we should all be using them to help ease of navigation",
-      "guid": "8ed4b353-78c3-4469-a16b-2763cffe1b9b",
-      "severity": "Low",
-      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+      "subcategory": "Meaningful Names",
+      "text": "Power BI allows us to give aliases to report objects. Avoid ambiguity for end users when naming columns and measures by using business-friendly names. To avoid confusing users, consider hiding unused columns.",
+      "guid": "0cb9ee5b-4547-48d4-97a8-26c3863d00f1"
     },
     {
       "category": "Design",
-      "subcategory": "Naming Conventions",
-      "text": "Test, UAT, production) do not need to be connected to source control.",
-      "guid": "8ed4b353-78c3-4469-a16b-2763cffe1b9b",
-      "severity": "Low",
-      "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
+      "subcategory": "Personalize Visuals",
+      "text": "Enable “Personalize visuals” in report settings when sharing reports with users. This enables users to gain further insights through ad-hoc exploration. Combine this feature with personal bookmarks to enable self-service BI.",
+      "guid": "cac6a9ef-1d6a-483d-b5de-36c1c81871a0"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Scrolss with Visual",
+      "text": "Multiple scrolls on a single page lead to a negative user experience. Limit our page size to the standard report sizes when possible. Use the Bookmark and Selection pane to toggle the visibility of visuals if needed.",
+      "guid": "bc5c1e43-a186-458d-8958-fd77179b8255",
+      "link": "https://docs.microsoft.com/power-bi/create-reports/desktop-drill-through-buttons"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Drillthrough buttons ",
+      "text": "Drillthrough buttons are more intuitive than right-click because they clearly signal actions and results to users. Use conditional formatting to ensure button text is context-driven, further enhancing the user experience.",
+      "guid": "56df2bee-4563-4afd-a339-348726dd69c5"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Reusability",
+      "text": "Templates enable us to develop branded reports faster. With templates, we can save custom color palettes and themes, ensuring corporate branding is pre-applied to all pages. Templates also automatically connect to commonly used data sources and offer commonly used DAX measures.",
+      "guid": "b5c2a254-94b6-49ba-b379-ac43bc68e1d7"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Use the right visuals",
+      "text": "3-D charts look good but they are harder to read than flat visuals.Be consistent with our designs — chart scales, dimensions, time frames, measurement scale, and even colors.Use only 3-4 numeric values when showing numbers — 1.34 million is better than 1,340,000.Use only data labels when necessary.",
+      "guid": "aa9b68a0-88c9-4a80-a22c-8eb9d1bb77f2",
+      "link": "https://docs.microsoft.com/power-bi/visuals/power-bi-visualization-types-for-reports-and-q-and-a"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Data Reduction Techniques",
+      "text": "Remove unnecessary columnsRemove unnecessary rowsGroup by and summarizeOptimize column data typesDisable Power Query query loadDisable auto date/timeSwitch to Mixed mode",
+      "guid": "6e5e6beb-a8ed-44f3-937c-c336d816f27a",
+      "link": "Data reduction techniques for Import modeling"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Star Schema",
+      "text": "Describes star schema design and its relevance to developing Power BI data models optimized for performance and usability.",
+      "guid": "71efe1b9-b5d9-4de0-b5d7-21d41d2500c8",
+      "link": "Understand star schema and the importance for Power BI"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Check background refresh",
+      "text": "Disable Power Query background refresh",
+      "guid": "17bf9eac-41fd-4339-8798-bc288bec6a17",
+      "link": "https://docs.microsoft.com/power-bi/guidance/power-query-background-refresh"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Auto Date Time Intelligence",
+      "text": "Check if, Disable Auto date time intelligence for new files.You can use a single date table to reduce model size, placing any required relationships in fact tables. When building your date table, split the date and time to improve data compression",
+      "guid": "ca724445-1e1a-4dd3-952a-ec7239237a15"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Query Folding and Refer Native Query",
+      "text": "Query folding guidance in Power BI Desktop",
+      "guid": "1c5cb5e4-0191-4538-9e5c-a9c26d9c42bb",
+      "link": "https://docs.microsoft.com/power-bi/guidance/power-query-folding"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Filter First, Calculations Later in Power BI",
+      "text": "If for some reason the query cannot fold, such as when we are reading data from a non-relation source like a text file or Excel worksheet, it's important to reduce the size of the data set if possible. For example, if we need to filter on a column, we should better do it as one of the very first steps in the query. The same goes for removing columns. In short: filter first, calculations later.",
+      "guid": "5bd0c699-9a24-46e3-989a-7e42c77d78cb"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Use Power BI Functions for Reuse",
+      "text": "If we have many queries with a common complex calculation: we should try to make a function out of it.",
+      "guid": "9d55d14c-3c49-429c-a1b3-d1325ae125ba",
+      "link": "https://docs.microsoft.com/powerquery-m/understanding-power-query-m-functions"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Limit complex measures and aggregations in data models",
+      "text": "Create calculated measures instead of calculated columns. Where possible, push calculated columns and measures to the source. The closer they are to the source, the faster they are likely to perform.",
+      "guid": "34d0685e-ddce-49be-9bb0-ddb3c55fb2ec"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Use slicers sparingly",
+      "text": "Slicers are a great way of allowing users to navigate data, but they come at a performance cost. Each slicer generates two queries: one fetches the data, the other fetches selection details. Adding too many slicers drastically slows performance. To remove unnecessary slicers, use the Filter pane to evaluate which slicers are used the least.",
+      "guid": "14eeaa35-9282-49e2-bdb2-173686aff679"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Reduce queries",
+      "text": "Reduce the number of queries sent by Power BI using the Query reduction settings. For slicers, select the “Add an Apply button to each slicer to apply changes when you’re ready” option. For filters, select “Add a single Apply button to the filter pane to apply changes at once (preview).”",
+      "guid": "1b4935ad-a423-424e-ae81-c123181a6417"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Avoid bi-directional and many-to-many relationships ",
+      "text": "Many-to-many and bi-directional relationships navigate more pathways and check more data points. As a result, bi-directional relationships against high-cardinality columns negatively impact report performance.",
+      "guid": "415833fb-4ae3-4c2d-b743-166c3bcbe05b"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Avoid using floating point data types",
+      "text": "Floating point data types can result in unpredictable round-off errors and can decrease the performance of reports. Use Decimal or Fixed Decimal Data Type.",
+      "guid": "0364d28e-42e9-4bbb-a868-265abc9264e9"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Replace the auto-generated date table with a custom date table in your model",
+      "text": "Using a date table enables you to leverage the time-series function in Power BI. However, the auto-generated date table creates a date table for each date column, drastically increasing the model size.",
+      "guid": "a19ae28c-84c4-43c6-a781-8ca0e6c42149"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Reduce the amount of data loaded on page load",
+      "text": "Use drill-through pages, and tooltips to reduce the amount of data loaded on page load. This improves page load time for landing pages.",
+      "guid": "d514b933-d357-44d1-8129-bd7aaf12e6b9"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Selection of Dataset modes ",
+      "text": "Three dataset modes :- Import, DirectQuery, Composite. Should consider the rationale for each mode, and possible impacts on Power BI capacity resources",
+      "guid": "4ee5ef43-d299-4258-8718-d6d1f5072576",
+      "link": "https://docs.microsoft.com/power-bi/connect-data/service-dataset-modes-understand"
+    },
+    {
+      "category": "Data Model",
+      "subcategory": "Ensure the cache update frequency aligns with the data source refresh frequency(DirectQuery and live connection datasets)",
+      "text": "By default, the Power BI cache update frequency is set to one hour. Cache update frequency should be set at similar intervals to data source refresh frequency. If, for example, our data set refreshes only once per day, we should update the cache frequency accordingly. This improves report performance and accuracy for end users.",
+      "guid": "9e35690e-7824-4ac9-9221-3d0370f422f7",
+      "link": "https://powerbi.microsoft.com/en-my/blog/announcing-custom-cache-refresh-schedules-in-the-power-bi-service/"
+    },
+    {
+      "category": "Data Source",
+      "subcategory": "Import only necessary fields and tables instead of entire data sets",
+      "text": "Ensure the model is as narrow and lean as possible. Power BI works on columnar indexes, meaning longer and leaner tables perform better. If we need to import a large table, partition it and process multiple partitions in parallel.",
+      "guid": "09e85b86-ad88-444c-b3b2-b38b875ba1cf"
+    },
+    {
+      "category": "Data Source",
+      "subcategory": "Data Warehouse or No Data Warehouse",
+      "text": "For small ad-hoc analysis projects, such as analyzing the data from one text file, we  don't need a data warehouse. But if we see a particular data set being used all over the organization, or if multiple people make reports over the same data, it might be time for a centralized effort to create a data warehouse. ",
+      "guid": "10499f03-a4d2-4ce4-94db-bbc8682a5abc"
+    },
+    {
+      "category": "Visualizations",
+      "subcategory": "Filters",
+      "text": "Apply the most restrictive filters i.e. use the 'Top N' filter to reduce the max number of items that the table displays.",
+      "guid": "a2a4eda1-dae2-4cc9-9c48-c6b781dca0e6",
+      "link": "https://docs.microsoft.com/power-bi/guidance/power-bi-optimization"
+    },
+    {
+      "category": "Visualizations",
+      "subcategory": "Evaluate custom visual performance",
+      "text": "Custom visuals can perform poorly when handling large datasets or complex aggregations. Uncertified custom visuals are generally not tested by the Power BI team. If a custom visual performs poorly, consider replacing it with a different visual.",
+      "guid": "c46589e5-58b9-437d-9974-d1112dbd7aaf"
+    },
+    {
+      "category": "Visualizations",
+      "subcategory": "Limit the number of visuals in dashboards and reports",
+      "text": "Using too many visuals on a single report slows report performance. ",
+      "guid": "12e6b94e-f6e0-447d-8d92-981b1cd6d2f5"
+    },
+    {
+      "category": "Visualizations",
+      "subcategory": "Remove unnecessary interactions between visuals",
+      "text": "By default, all visuals on a report page can interact with one another. By disabling unnecessary interactions, you reduce the number of queries fired at the back end, which improves report performance.Please note , After enabling the setting (Disabling cross highlighting and filtering by default) in Query Reduction tab, newly added visuals will be automatically disabled for cross highlighting and filtering, but this will not take effect on the visuals created prior this setting.We need to make the interactions turned off for each pre-existing visual on the page.",
+      "guid": "8f6dbad3-7dad-443b-a6ce-1d7aa9b35704"
+    },
+    {
+      "category": "Visualizations",
+      "subcategory": "Choice of visualization",
+      "text": "It is very crucial to select the type of visualization to show the intended information to users",
+      "guid": "49aa8052-d88e-479d-a7b3-3bd2a1a27e7a",
+      "link": "https://docs.microsoft.com/power-bi/visuals/power-bi-visualization-types-for-reports-and-q-and-a"
+    },
+    {
+      "category": "Visualizations",
+      "subcategory": "Use report backgrounds for static images",
+      "text": "For static images, use report backgrounds rather than multiple visuals. This conveys the same information to the end user at a fraction of the performance cost.",
+      "guid": "8e90be1e-38ce-4f29-a12b-d363cbbac79b"
+    },
+    {
+      "category": "DAX",
+      "subcategory": "Avoid converting BLANKs to values",
+      "text": "&nbsp",
+      "guid": "4cc1dec4-c660-4c30-b25f-fbb46a393af3",
+      "link": "https://docs.microsoft.com/dax/best-practices/dax-avoid-converting-blank"
+    },
+    {
+      "category": "DAX",
+      "subcategory": "Avoid using FILTER as a filter argument",
+      "text": "&nbsp",
+      "guid": "fec32847-87b1-4177-a2b5-a46beb533340",
+      "link": "https://docs.microsoft.com/dax/best-practices/dax-avoid-avoid-filter-as-filter-argument"
+    },
+    {
+      "category": "DAX",
+      "subcategory": "DIVIDE function vs. divide operator (/)",
+      "text": "&nbsp",
+      "guid": "24d61678-6d6f-4a96-a96a-d88518f48273",
+      "link": "https://docs.microsoft.com/dax/best-practices/dax-divide-function-operator"
+    },
+    {
+      "category": "DAX",
+      "subcategory": "Use COUNTROWS instead of COUNT",
+      "text": "&nbsp",
+      "guid": "4c986ba2-8021-445a-8147-5e39e5309ccc",
+      "link": "https://docs.microsoft.com/dax/best-practices/dax-countrows"
+    },
+    {
+      "category": "DAX",
+      "subcategory": "Use SELECTEDVALUE instead of VALUES",
+      "text": "&nbsp",
+      "guid": "d979366b-cda3-4750-ab2a-b039d95d54c7",
+      "link": "https://docs.microsoft.com/dax/best-practices/dax-selectedvalue"
+    },
+    {
+      "category": "DAX",
+      "subcategory": "Use variables to improve your DAX formulas",
+      "text": "&nbsp",
+      "guid": "2de7e216-5c3a-487a-b4a7-a1f8939bda47",
+      "link": "https://docs.microsoft.com/dax/best-practices/dax-variables"
+    },
+    {
+      "category": "DAX",
+      "subcategory": "Appropriate use of error functions",
+      "text": "&nbsp",
+      "guid": "768f14c1-1577-45c2-ba55-b46a948008ae",
+      "link": "https://docs.microsoft.com/dax/best-practices/dax-error-functions"
+    },
+    {
+      "category": "DAX",
+      "subcategory": "DAX Measures and Columns Naming Convention",
+      "text": "When referencing columns in a measure, the naming conventions it to use TableName[ColumnName], while for measures we should use only the measure name. This convention makes it easy to distinguish between columns and measures in a DAX formula and avoids any confusion. ",
+      "guid": "7d7e4b47-5b6c-48bd-af59-bce65de8a03f"
+    },
+    {
+      "category": "DAX",
+      "subcategory": "Use DAX Variables if Possible ",
+      "text": "Using variables in DAX leads to better readable and understandable code. Sometimes it can also lead to a performance improvement because some parts of the formula need to be calculated only once. ",
+      "guid": "dbcbd8ac-2aae-4bca-8a44-da1dbf2dc992",
+      "link": "https://docs.microsoft.com/dax/best-practices/dax-variables"
+    },
+    {
+      "category": "DAX",
+      "subcategory": "Try to Avoid DAX Iterator Functions",
+      "text": "Refer an example in Link",
+      "guid": "481617d1-dca0-4f61-9659-de558f937249",
+      "link": "https://www.sqlbi.com/articles/optimizing-nested-iterators-in-dax/"
+    },
+    {
+      "category": "DAX",
+      "subcategory": "Write Explicit Measures in DAX",
+      "text": "In PBI Desktop, any column with numerical values can be used as a measure in a visualization, or it can be referenced in a measure. When we use such a column, it's an implicit measure. When we write a DAX formula to create a measure, it's an explicit measure. The best practice is to use explicit measures everywhere, even for simple measures like sum, min, max and average. The reason behind this is that if we use implicit measures in the formula of other measures and at some point the business logic changes – meaning we need to write a formula for this basic measure – we will need to update every single measure where this base measure was used. Explicit measures promote reusability and make it easier to refactor your code.",
+      "guid": "c831112d-bd7f-4af1-8e70-943f6304722d",
+      "link": "https://support.microsoft.com/office/measures-in-power-pivot-86484821-a324-4da3-803b-82fd2e5033f4"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Enable Row-Level Security ",
+      "text": "Row-Level Security restricts user access to certain rows in a database depending on the characteristics (role) of the user executing a query. With RLS, Power BI only imports data the user is authorized to view.",
+      "guid": "a29c2b1c-d622-4f54-a29b-ade3aad1e8c3",
+      "link": "https://docs.microsoft.com/power-bi/enterprise/service-admin-rls"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Object Level Security",
+      "text": "Object-level security (OLS) enables model authors to secure specific tables or columns from report viewers. From a viewer standpoint, the table or column simply does not exist. Currently OLS definitions are not created natively in Power BI Desktop, but external tools such as Tabular Editor can set OLS rules on Power BI Desktop datasets.",
+      "guid": "b20c6999-a646-4f33-a9a7-e42c78d78c06",
+      "link": "https://powerbi.microsoft.com/blog/object-level-security-ols-now-available-for-public-preview-in-power-bi-premium/"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Use certified custom visuals",
+      "text": "Power BI certified visuals are custom visuals on AppSource that have passed rigorous quality testing. Microsoft verifies that certified custom visuals have robust, high-performance code. Certified custom visuals are the only custom visuals that can be viewed in Export to PowerPoint mode and email subscriptions.",
+      "guid": "a62a2194-956e-4698-bc4a-2fe27b2e2870"
+    },
+    {
+      "category": "Security",
+      "subcategory": "Categorize report data by business impact",
+      "text": "Use Power BI sensitivity labels to classify data as high, medium, or low business impact. High Business Impact (HBI) data requires users to request a policy exception to share the data externally. Low Business Impact (LBI) and Medium Business Impact (MBI) data do not require exceptions. By using Power BI data sensitivity labels, you raise user awareness about security and how reports should be shared inside and outside the organization.",
+      "guid": "1a1352be-edf7-49b4-a8de-ec4962cc3bd2",
+      "link": "https://docs.microsoft.com/power-bi/enterprise/service-security-sensitivity-label-overview"
+    },
+    {
+      "category": "Monitoring performance",
+      "subcategory": "Power BI Performance Analyzer",
+      "text": "One of the built-in tools is the performance analyzer, which gives  an overview of all the time spent on the various queries executed by your reports. Refer screenshot.",
+      "guid": "5f4bb46a-393a-4f7f-9172-84797b1578a2",
+      "link": "https://docs.microsoft.com/power-bi/guidance/monitor-report-performance"
+    },
+    {
+      "category": "Monitoring performance",
+      "subcategory": "Best Practice Analyser",
+      "text": "Open source community tool",
+      "guid": "19a46beb-5343-4502-9922-634292bb5285",
+      "link": "https://powerbi.microsoft.com/blog/best-practice-rules-to-improve-your-models-performance/"
+    },
+    {
+      "category": "Monitoring performance",
+      "subcategory": "Power BI Helper",
+      "text": "Open source community tool",
+      "guid": "37a54119-bf8e-48e5-a542-87d9cdc156cc",
+      "link": "https://powerbi.microsoft.com/en-my/blog/webinar-12-4-power-bi-helper-a-free-community-tool-for-developers-by-reza-rad/"
+    },
+    {
+      "category": "Accessibility",
+      "subcategory": "Use Built-in accessibility features",
+      "text": "Keyboard navigationScreen-reader compatibilityHigh contrast colors viewFocus modeShow data table",
+      "guid": "5c6f4e16-85fd-4dde-a8a4-b7cdeb4c610c",
+      "security": 1,
+      "simple": -1,
+      "link": "https://docs.microsoft.com/power-bi/create-reports/desktop-accessibility-creating-reports"
+    },
+    {
+      "category": "Accessibility",
+      "subcategory": "Built-in accessibility features requiring configuration",
+      "text": "Alt textTab orderTitles & labelsMarkersReport themes",
+      "guid": "3fc14eea-6e69-4e8d-aa3e-ec218e687ab0",
+      "scale": 1,
+      "link": "https://docs.microsoft.com/power-bi/create-reports/desktop-accessibility-creating-reports"
+    },
+    {
+      "category": "Accessibility",
+      "subcategory": "Consume Reports With accessibility features",
+      "text": "To help users get the same information from a report as those who don’t use assistive technology.",
+      "guid": "bbe209d3-9fda-4477-9842-4c116785c2fa",
+      "security": 1,
+      "simple": -2,
+      "link": "https://docs.microsoft.com/power-bi/create-reports/desktop-accessibility-consuming-tools"
+    },
+    {
+      "category": "Environment",
+      "subcategory": "Ensure reports and data sources are in the same region",
+      "text": "With the tenant and data source in the same region, we can limit the effects of network latency. Sharing a region ensures faster data transfer and faster query execution.",
+      "guid": "55b56ad4-8408-4fe7-8734-c476ba280dcf",
+      "security": 1,
+      "simple": -2
+    },
+    {
+      "category": "Environment",
+      "subcategory": "Optimize Capacities",
+      "text": "Best practicesUsing workspaces instead of personal workspaces.Separating business critical and Self-Service BI (SSBI) into different capacities.If sharing content only with Power BI Pro users, there may be no need to store the content in a reserved capacity.Use reserved capacities when looking to achieve a specific refresh time, or when specific features are required. For example, with large datasets or paginated reporting.Monitoring using Power BI Premium Capacity Metrics app ",
+      "guid": "8c3f3981-2b24-463c-bfe1-79c599df0d5a",
+      "scale": 1,
+      "simple": -1,
+      "link": "https://docs.microsoft.com/power-bi/enterprise/service-admin-premium-monitor-capacity"
+    },
+    {
+      "category": "Environment",
+      "subcategory": "Gateway sizing",
+      "text": "Use on-premises data gateway instead of Personal Gateway",
+      "guid": "73dd4ce3-2c18-4813-906f-7c4c0d4e5146",
+      "scale": 1,
+      "simple": -1,
+      "link": "https://docs.microsoft.com/power-bi/guidance/gateway-onprem-sizing"
+    },
+    {
+      "category": "Environment",
+      "subcategory": "Large datasets in Power BI Premium",
+      "text": "With Premium capacities, large datasets beyond the default limit can be enabled with the Large dataset storage format setting. ",
+      "guid": "8c2689b3-2ab5-47cf-a645-46135a337453",
+      "scale": 1,
+      "simple": -1,
+      "link": "https://docs.microsoft.com/power-bi/enterprise/service-premium-large-models"
+    },
+    {
+      "category": "Deployment",
+      "subcategory": "Hasslefree deployment across different envrionments, workspaces",
+      "text": "Deployment pipelines is designed as a pipeline with three stages:DevelopmentThis stage is used to design, build, and upload new content with fellow creators. This is the first stage in deployment pipelines.TestYou're ready to enter the test stage after you've made all the needed changes to your content. You upload the modified content so it can be moved to this test stage. Here are three examples of what can be done in the test environment:Share content with testers and reviewersLoad and run tests with larger volumes of dataTest your app to see how it will look for your end usersProductionAfter testing the content, use the production stage to share the final version of your content with business users across the organization.",
+      "guid": "f821b8eb-8c0a-4a77-b26e-4d5beba8dc4e",
+      "security": 2,
+      "simple": -2,
+      "link": "https://learn.microsoft.com/power-bi/create-reports/deployment-pipelines-overview"
+    },
+    {
+      "category": "Deployment",
+      "subcategory": "Accessing deployment pipelines",
+      "text": "You'll be able to access the deployment pipelines feature, if the following conditions are met:You have one of the following Premium licenses:You're a Power BI Pro user, and you belong to an organization that has Premium capacity.Premium Per User (PPU).You're an admin of a workspace.",
+      "guid": "2436bc33-6d71-45f2-9960-eee0b9b5c8de",
+      "security": 1,
+      "simple": -1,
+      "link": "https://learn.microsoft.com/power-bi/create-reports/deployment-pipelines-get-started"
+    },
+    {
+      "category": "Deployment",
+      "subcategory": "Deploying options",
+      "text": "Deployment pipelines offer three options when it comes to deploying your Power BI content:Deploying all content - Deploy all your Power BI content to the target stage.Selective deployment - Select which Power BI content to deploy to the target stage.Backwards deployment - Deploy your content to a previous stage in the pipeline.",
+      "guid": "fc5d721d-41d2-4500-a707-ae9eab40fd32",
+      "security": 1,
+      "simple": -1
+    },
+    {
+      "category": "Deployment",
+      "subcategory": "Automate your deployment pipeline using APIs and Azure DevOps",
+      "text": "To achieve continuous integration and continuous delivery (CI/CD) of content, many organizations use various automation tools, including Azure DevOps. Organizations that use Azure DevOps, can use the Power BI automation tool extension, which supports many of the deployment pipelines API operations.",
+      "guid": "d4bdc015-ccf3-419e-9a1e-b58889535d22",
+      "security": 1,
+      "simple": -1,
+      "link": "https://learn.microsoft.com/power-bi/create-reports/deployment-pipelines-automation"
     }
   ],
   "categories": [

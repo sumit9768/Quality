@@ -1,0 +1,364 @@
+{
+  "items": [
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Avoid spaces in object names",
+      "guid": "12318ca5-0170-4158-b3fb-4aa3c2df7f31"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Avoid quotes with names",
+      "guid": "66c3b87a-05b7-4a20-a94a-bda57778f24d"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Avoid square brackets around your object names",
+      "guid": "116785d2-fa56-4c56-a948-008be8d7e4c4"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Use Camel case",
+      "guid": "86b6d8bd-c059-4ccf-95ee-8a1309888957"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Use Prefixes for specific object types",
+      "guid": "9e66b896-d71f-4a6c-a7be-9955d14c3c49"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Avoid reserved words for object names",
+      "guid": "d987cb3d-1325-4aa1-84b6-e4d0685eddce"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Use singular names for tables instead of plural",
+      "guid": "97a3b7bc-db3b-451f-a2ec-14eea6e59d8d"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Don’t name columns the same as the table",
+      "guid": "9a2edb21-7e67-46ab-b669-cb49e5a96f23"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Specify names of constraints instead of the default",
+      "guid": "24ece8cc-1231-48ca-9017-0158e3fb4aa3"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Naming Conventions",
+      "text": "Consider prefixes on constraint names",
+      "guid": "8d9b3bec-228e-4743-9b17-36db55f67961"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Database Design",
+      "text": "Prefer the use of surrogate primary keys",
+      "guid": "3334bd09-dc23-4419-bb61-28126504bb47"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Database Design",
+      "text": "Add unique constraints where columns must be unique",
+      "guid": "a493a080-4272-4947-a8b1-588b31aa46ce"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Database Design",
+      "text": "Use Not Null constraints and default values",
+      "guid": "b5444513-5a22-4745-893c-b628637a5511"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Database Design",
+      "text": "Avoid floating-point data types unless you really understand them",
+      "guid": "9c08e8f5-9543-487e-aced-166cd072af9b"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Database Design",
+      "text": "Avoid CHAR data type",
+      "guid": "241a998a-536e-4737-a97e-71cb7da8cfaa"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Database Design",
+      "text": "Avoid the Entity Attribute Value design",
+      "guid": "62a15949-56da-497d-a3a2-3267b2358705"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Database Design",
+      "text": "Avoid storing multiple pieces of information in a single field",
+      "guid": "a1652bde-dfa8-4a48-acde-c4862bc3bc14"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Database Design",
+      "text": "Create indexes where needed, but not everywhere",
+      "guid": "aeb7f66e-8d9b-43be-a228-e7436b1736db"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Database Design",
+      "text": "Don’t create large tables just to avoid joins for “performance”",
+      "guid": "33d3574d-1112-49bd-9aaf-12e6b94ef6e0"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Database Design",
+      "text": "Don’t store passwords in plain text. Use Key Vault",
+      "guid": "43d29925-8171-48d6-b2f5-0725769e3569"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Syntax and Formatting",
+      "text": "Use meaningful table aliases as your query grows",
+      "guid": "0e7824ac-9322-413e-8370-f52207199406"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Syntax and Formatting",
+      "text": "Use AS for column aliases",
+      "guid": "415833ee-79d6-4c6d-9632-165c7acae44a"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Syntax and Formatting",
+      "text": "Use a consistent case for keywords",
+      "guid": "bd5f8d79-e2e8-4776-a313-c515675c5ea8"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Syntax and Formatting",
+      "text": "Keywords should start on a new line",
+      "guid": "5b86ad88-4f8e-4372-934b-875ba18f1045"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Syntax and Formatting",
+      "text": "Columns in SELECT clause should be on their own lines",
+      "guid": "9f0364d2-8e43-4f9b-abc8-68265abca264"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Syntax and Formatting",
+      "text": "Commas for columns should go at the end of a line",
+      "guid": "e9a19ae2-8c95-4c44-a6b7-819ca0e6c421"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Syntax and Formatting",
+      "text": "Add a space before and after =",
+      "guid": "49e514b9-33d3-4574-b111-29bd7aaf12e6"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Syntax and Formatting",
+      "text": "Put multiple join conditions on separate lines",
+      "guid": "750ab2ab-0e9d-455d-84c3-c4929db1b3d1"
+    },
+    {
+      "category": "Design",
+      "subcategory": "Syntax and Formatting",
+      "text": "Indent subqueries",
+      "guid": "325ae225-ba34-4d06-a5ed-dceace3bb1dd"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Functionality",
+      "text": "Avoid using BETWEEN for dates",
+      "guid": "b3c65fb2-fc14-4eea-a359-2829e2edc218"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Functionality",
+      "text": "Use IN instead of multiple OR",
+      "guid": "3687af06-791b-4493-9bda-43324ece81c1"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Functionality",
+      "text": "Use CASE instead of other functions such as DECODE",
+      "guid": "23181a64-1742-4694-9fb4-ae3d3ef74317"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Functionality",
+      "text": "Avoid using functions in WHERE clauses if possible",
+      "guid": "6c4bcbf1-5bbe-4209-b4a0-eb57778424d2"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Functionality",
+      "text": "Write separate SQL queries for separate tasks",
+      "guid": "16786d20-a56c-456a-b485-18ff82734c58"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Functionality",
+      "text": "Use NOT EXISTS instead of NOT IN",
+      "guid": "6ba280dc-05a1-4cf7-9ee9-e1309cccd579"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Functionality",
+      "text": "Use CASE instead of multiple SELECT with UNION",
+      "guid": "366bcda3-71b6-47d6-9ba5-9119c08e805d"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Functionality",
+      "text": "Use UNION ALL instead of UNION if possible",
+      "guid": "597c7e9c-ed16-4add-876e-09b241a999a6"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Functionality",
+      "text": "Avoid DISTINCT to fix duplicate data issues",
+      "guid": "8ae77c99-7e82-41b7-bb8c-faa66e15d4d5"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Functionality",
+      "text": "Avoid SELECT *",
+      "guid": "ada98dc4-e243-46bb-835c-705e1796feed"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Functionality",
+      "text": "Avoid implicit conversions",
+      "guid": "fa8a4c8c-dec4-4c62-8c30-d25ffb7f6ae9"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "Functionality",
+      "text": "Don’t overuse triggers",
+      "guid": "eab3fec3-28f7-487b-a177-adb5af6ba713"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "SQL injection",
+      "text": "Only use HAVING with aggregate functions",
+      "guid": "3340d09d-c234-429d-a612-81269041c5bb"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "SQL injection",
+      "text": "Avoid using column numbers in ORDER BY clause",
+      "guid": "4d3e1814-276d-44b9-ab16-c8b31aa5aceb"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "SQL injection",
+      "text": "Only use ORDER BY if needed",
+      "guid": "58889135-e227-4896-b31b-67d67ba59119"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "SQL injection",
+      "text": "Always specify column names in INSERT statements",
+      "guid": "8b4a4b19-1538-43a5-aa9c-2699c42ab57d"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "SQL injection",
+      "text": "Use join keywords instead of WHERE clause",
+      "guid": "0c655562-46a3-4385-93a4-dc739748b662"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "SQL injection",
+      "text": "Don’t use the join clause for filtering on conditions",
+      "guid": "2ac19f91-6965-4498-badf-e277de183b1a"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "SQL injection",
+      "text": "Avoid wildcards where possible",
+      "guid": "c352baa9-b646-4084-a9a8-082db8eb9d1b"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "SQL injection",
+      "text": "Use partitions for tables with high data volume",
+      "guid": "b73b26a5-a67e-4ba8-bd4b-34378c336981"
+    },
+    {
+      "category": "Performance",
+      "subcategory": "SQL injection",
+      "text": "Consider using Partition Columns in WHERE clause wherever applicable",
+      "guid": "6b2763ce-fe0b-49b5-a8de-fd5972cd4cd2"
+    }
+  ],
+  "categories": [
+    {
+      "name": "Enviroment Setup"
+    },
+    {
+      "name": "Design"
+    },
+    {
+      "name": "Security"
+    },
+    {
+      "name": "Performance"
+    },
+    {
+      "name": "Logging"
+    },
+    {
+      "name": "Data Masking"
+    },
+    {
+      "name": "Code"
+    }
+  ],
+  "status": [
+    {
+      "name": "Not verified",
+      "description": "This check has not been looked at yet"
+    },
+    {
+      "name": "Open",
+      "description": "There is an action item associated to this check"
+    },
+    {
+      "name": "Fulfilled",
+      "description": "This check has been verified, and there are no further action items associated to it"
+    },
+    {
+      "name": "Not required",
+      "description": "Recommendation understood, but not needed by current requirements"
+    },
+    {
+      "name": "N/A",
+      "description": "Not applicable for current design"
+    }
+  ],
+  "severities": [
+    {
+      "name": "High"
+    },
+    {
+      "name": "Medium"
+    },
+    {
+      "name": "Low"
+    }
+  ],
+  "metadata": {
+    "name": "Use the 'Import latest checklist' button to get the latest version of a review checklist"
+  }
+}
+
