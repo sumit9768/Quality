@@ -111,14 +111,14 @@
     {
       "category": "Design",
       "subcategory": "Integration Runtimes",
-      "text": "self hosted runtimes (and linked services for that matter) should not have environment specific names i.e. dev runtime is called ‘devruntime’ and the test one is called ‘test runtime’ . Instead have one generic name. ",
+      "text": "self hosted runtimes (and linked services for that matter) should not have environment specific names i.e. dev runtime is called ?devruntime? and the test one is called ?test runtime? . Instead have one generic name. ",
       "guid": "b31f38c4-03a8-422c-8463-cf0f18ac699e",
       "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
     },
     {
       "category": "Design",
       "subcategory": "Integration Runtimes",
-      "text": "If different names are followed it’s extra difficult to migrate code - patches to be coded through devops or additional patch needed",
+      "text": "If different names are followed it?s extra difficult to migrate code - patches to be coded through devops or additional patch needed",
       "guid": "f1d5a83d-e4de-432c-8881-470607c5c0e4",
       "link": "https://learn.microsoft.com/azure/data-factory/naming-rules"
     },
@@ -206,7 +206,7 @@
     {
       "category": "Security",
       "subcategory": "Managed Identities",
-      "text": "Is a great way to allow interoperability between resources without needing an extra layer of Service Principals (SPN’s) or local resource credentials stored in Key Vault.",
+      "text": "Is a great way to allow interoperability between resources without needing an extra layer of Service Principals (SPN?s) or local resource credentials stored in Key Vault.",
       "guid": "37b5b680-cb9e-4e5b-9548-8d447a826c38",
       "link": "https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview"
     },
@@ -338,6 +338,15 @@
     {
       "category": "Debuging",
       "subcategory": "Debug Parameters",
+      "text": "rerun Pipeline Rerun with new parameters - Pipeline parameters can now be changed when re-running a pipeline from the Monitoring page without returning to the pipeline editor",
+      "guid": "f12e6b94-ef5e-4f43-b299-2581718d6d1f",
+      "scale": 1,
+      "simple": -1,
+      "link": "https://learn.microsoft.com/azure/data-factory/monitor-visually#rerun-pipelines-and-activities"
+    },
+    {
+      "category": "Debuging",
+      "subcategory": "Debug Parameters-test",
       "text": "rerun Pipeline Rerun with new parameters - Pipeline parameters can now be changed when re-running a pipeline from the Monitoring page without returning to the pipeline editor",
       "guid": "f12e6b94-ef5e-4f43-b299-2581718d6d1f",
       "scale": 1,
