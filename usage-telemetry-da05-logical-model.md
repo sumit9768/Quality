@@ -21,14 +21,14 @@ audit events.
 
 | Requirement | Fact or bridge | Conformed dimensions | Measures and outputs |
 |---|---|---|---|
-| 1. Asset usage facts | `fact_person_asset_activity_daily`, `fact_asset_usage_daily` | `dim_date`, `dim_asset`, `dim_operation`, `dim_tenant`, `dim_evidence_source` | Activity volume, daily users, active users 7/30/90 days, usage trend, last read, last write |
-| 2. Read versus write | Both usage facts | `dim_operation` | Read, Write, Share, Admin, Unclassified counts and Read/Write Ratio |
+| 1. Asset usage facts | `fact_person_asset_activity_daily`, `fact_asset_usage_daily` | `dim_date`, `dim_asset`, `dim_operation_class`, `dim_tenant`, `dim_evidence_source` | Activity volume, daily users, active users 7/30/90 days, usage trend, last read, last write |
+| 2. Read versus write | Both usage facts | `dim_operation`, `dim_operation_class` | Read, Write, Share, Admin, Unclassified counts and Read/Write Ratio |
 | 3. Usage by person | `fact_person_asset_activity_daily`, `bridge_person_account` | `dim_people`, `dim_user`, `dim_tenant`, `dim_organization` | Distinct people, internal/guest/external usage, home tenant, resource tenant, cross-tenant activity |
 | 4. Person activity profile | `fact_person_sign_in_daily`, `fact_person_activity_snapshot` | `dim_people`, `dim_user`, `dim_asset`, `dim_device`, `dim_tenant`, `dim_date` | Activity status, sign-ins, tenant count, application count, device count, last activity, Dormancy Score |
 | 5. Application and solution usage | Both usage facts | `dim_asset`, `dim_operation`, `dim_people`, `dim_tenant` | Flow runs, app launches, report views, distinct people, last execution |
 | 6. Usage trends | `fact_asset_usage_daily`, `fact_person_activity_snapshot` | `dim_date`, `dim_asset`, `dim_tenant`, `dim_organization` | Week-over-week, month-over-month, rolling average, segment trend, historical profile |
 | 7. Metadata usage fallback | `fact_asset_usage_daily` | `dim_evidence_source`, `dim_operation`, `dim_asset`, `dim_date` | Evidence timestamp, evidence priority, observed versus inferred activity, coverage status |
-| 8. Post-migration verification | `fact_asset_migration_verification`, `bridge_asset_migration` | `dim_asset` in source and target roles, `dim_tenant`, `dim_date`, `dim_migration_wave`, `dim_operation` | Source and target usage, usage delta, usage retention, reactivation, verification status |
+| 8. Post-migration verification | `fact_asset_migration_verification`, `bridge_asset_migration` | `dim_asset` in source and target roles, `dim_tenant`, `dim_date`, `dim_migration_wave`, `dim_operation_class` | Source and target usage, usage delta, usage retention, reactivation, verification status |
 | Identity resolution support | `bridge_person_account`, `fact_person_activity_snapshot` | `dim_people`, `dim_user`, `dim_tenant`, `dim_organization` | Resolved account count, unresolved identity count, identity confidence, active-person evidence |
 | Dependency analysis | `bridge_asset_relationship`, `bridge_asset_person_role`, `bridge_asset_organization` | `dim_asset`, `dim_people`, `dim_organization`, `dim_tenant` | Upstream and downstream dependency counts, shared owners, cross-organization dependencies |
 | Migration readiness | Usage facts, profile snapshot, asset relationship bridges | All conformed dimensions | Migration Readiness Score, dormancy, change velocity, dependency complexity, mapping coverage |
@@ -47,7 +47,7 @@ The recommended logical model follows these principles:
   target, guest, and external-tenant accounts.
 * Represent SharePoint sites, Teams, Power BI artifacts, Power Apps, Power Automate
   flows, and mailboxes through one conformed `dim_asset`.
-* Keep the detailed Gold grain at one person, asset, operation class, and day. Do not
+* Keep the detailed Gold grain at one person, asset, raw operation, and day. Do not
   expose raw audit events as the primary Power BI fact.
 * Persist exact trailing-window distinct counts in the asset aggregate. Daily distinct
   counts cannot be added to produce 7, 30, or 90-day active users.
@@ -67,6 +67,10 @@ The recommended logical model follows these principles:
 | `fact_person_sign_in_daily` | Transactional daily aggregate | Sign-in, application, resource tenant, and device profile |
 | `fact_person_activity_snapshot` | Periodic snapshot | Dormancy, identity resolution, and person-level migration assessment |
 | `fact_asset_migration_verification` | Periodic comparison snapshot | Source-to-target usage verification after migration |
+
+The minimum viable product for requirements 1 through 3 consists of the first two
+facts, their conformed dimensions, and `bridge_person_account`. The remaining facts can
+be added without changing the MVP grains.
 
 ### Conformed asset scope
 
@@ -94,8 +98,8 @@ same conformed asset key.
 | Property | Design |
 |---|---|
 | Business purpose | Canonical daily activity by resolved person and asset. Supports person attribution, exact active-user windows, cross-tenant usage, application impact, and rollup into all asset usage outputs. |
-| Grain | One row per `activity_date_key`, `resource_tenant_key`, `person_key`, `account_key`, `asset_key`, `operation_key`, and `evidence_source_key`. |
-| Foreign keys | Date, resource tenant, person, tenant account, asset, operation, evidence source; optional device for telemetry that reliably identifies one device. |
+| Grain | One row per `activity_date_key`, `resource_tenant_key`, `person_id`, `user_silver_id`, `asset_key`, `operation_key`, and `evidence_source_key`. |
+| Foreign keys | Date, resource tenant, person, tenant account, asset, operation, operation class, evidence source; optional device for telemetry that reliably identifies one device. |
 | Additive measures | `activity_count`, `successful_activity_count`, `failed_activity_count`, `cross_tenant_activity_count`. |
 | Non-additive attributes | `first_activity_at`, `last_activity_at`, `identity_resolution_confidence`, `asset_resolution_confidence`, `is_cross_tenant`, `is_inferred_activity`. |
 | Source Silver tables | `audit_entra`, `audit_exchange`, `audit_general`, `audit_sharepoint`; fallback inputs from `spo_sites`, `mailboxes`, and future Graph usage tables. |
@@ -110,13 +114,13 @@ usage without creating duplicate people.
 | Property | Design |
 |---|---|
 | Business purpose | Performance-optimized asset usage fact for daily reporting, rolling active-user windows, workload comparisons, and trend analysis. |
-| Grain | One row per `activity_date_key`, `resource_tenant_key`, `asset_key`, `operation_key`, and `evidence_source_key`. `operation_key` resolves to one operation class. |
-| Foreign keys | Date, resource tenant, asset, operation, evidence source; optional primary organization for a governed single-valued segment. |
+| Grain | One row per `activity_date_key`, `resource_tenant_key`, `asset_key`, `operation_class_key`, and `evidence_source_key`. |
+| Foreign keys | Date, resource tenant, asset, operation class, evidence source; optional primary organization for a governed single-valued segment. |
 | Additive measures | `activity_volume`, `successful_activity_volume`, `failed_activity_volume`, `cross_tenant_activity_volume`. |
 | Semi-additive measures | `daily_distinct_people`, `active_people_7d`, `active_people_30d`, `active_people_90d`, `last_activity_at`. |
 | Quality measures | `resolved_person_count`, `unresolved_person_count`, `resolved_asset_event_count`, `unresolved_asset_event_count`, `coverage_pct`. |
 | Source Silver tables | Derived primarily from `fact_person_asset_activity_daily`; metadata from `spo_sites`; mailbox fallback from future Silver mailbox statistics; future Graph usage report tables. |
-| Power BI use | Primary DA05 fact. Measures filter `dim_operation.operation_class` to return Last Read Timestamp, Last Write Timestamp, and class-specific trends. |
+| Power BI use | Primary DA05 fact. Measures filter `dim_operation_class.operation_class` to return Last Read Timestamp, Last Write Timestamp, and class-specific trends. |
 
 `active_people_7d`, `active_people_30d`, and `active_people_90d` are exact distinct
 counts across the full trailing window. They are not sums of `daily_distinct_people`.
@@ -129,7 +133,7 @@ counts would double-count people who used more than one asset.
 | Property | Design |
 |---|---|
 | Business purpose | Daily sign-in behavior by person, tenant account, application or resource, and device. Feeds activity status, application usage, dormant-account analysis, and identity resolution. |
-| Grain | One row per `sign_in_date_key`, `resource_tenant_key`, `person_key`, `account_key`, client `asset_key`, resource `asset_key`, `device_key`, `sign_in_outcome`, `is_interactive`, and `client_app_used`. |
+| Grain | One row per `sign_in_date_key`, `resource_tenant_key`, `person_id`, `user_silver_id`, client `asset_key`, resource `asset_key`, `device_key`, `sign_in_outcome`, `is_interactive`, and `client_app_used`. |
 | Foreign keys | Date, resource tenant, person, tenant account, client application asset, resource asset, device. |
 | Additive measures | `sign_in_attempt_count`, `successful_sign_in_count`, `failed_sign_in_count`, `risky_sign_in_count`. |
 | Semi-additive measures | `first_sign_in_at`, `last_sign_in_at`. |
@@ -141,7 +145,7 @@ counts would double-count people who used more than one asset.
 | Property | Design |
 |---|---|
 | Business purpose | A point-in-time profile of a person's activity and account posture for migration assessment, identity resolution, and dormant-account analysis. |
-| Grain | One row per `snapshot_date_key`, `person_key`, and `resource_tenant_key`. |
+| Grain | One row per `snapshot_date_key`, `person_id`, and `resource_tenant_key`. |
 | Foreign keys | Snapshot date, person, resource tenant, primary organization, optional migration wave. |
 | Measures | `activity_count_7d`, `activity_count_30d`, `activity_count_90d`, `active_asset_count_30d`, `active_application_count_30d`, `active_device_count_30d`, `active_tenant_count_30d`, `sign_in_count_30d`, `days_since_last_activity`, `days_since_last_sign_in`, `dormancy_score`, `resolved_account_count`. |
 | Status attributes | `activity_status`, `identity_status`, `has_cross_tenant_activity`, `has_source_activity`, `has_target_activity`, `is_dormant_candidate`. |
@@ -153,8 +157,8 @@ counts would double-count people who used more than one asset.
 | Property | Design |
 |---|---|
 | Business purpose | Compares source and target usage for a mapped asset after migration and records whether adoption and activity meet verification thresholds. |
-| Grain | One row per `verification_date_key`, `asset_migration_key`, `operation_key`, and comparison window. |
-| Foreign keys | Verification date, source asset, target asset, source tenant, target tenant, migration wave, operation, evidence source. |
+| Grain | One row per `verification_date_key`, `asset_migration_key`, `operation_class_key`, and comparison window. |
+| Foreign keys | Verification date, source asset, target asset, source tenant, target tenant, migration wave, operation class, evidence source. |
 | Measures | `source_activity_volume`, `target_activity_volume`, `source_active_people`, `target_active_people`, `activity_delta`, `activity_delta_pct`, `active_people_delta`, `usage_retention_pct`, `cross_tenant_activity_pct`, `days_to_first_target_use`. |
 | Status attributes | `verification_status`, `threshold_profile`, `source_coverage_status`, `target_coverage_status`, `is_comparable`. |
 | Source Silver tables | Derived from `fact_asset_usage_daily` and `bridge_asset_migration`; mapping candidates or workload-specific migration maps supply source-to-target relationships. |
@@ -176,7 +180,8 @@ visible with `is_comparable = false`.
 | `dim_people` | Canonical individual independent of tenant accounts | Existing `person_id`; display name, employee ID, person type, home tenant, primary organization, identity status, confidence, valid dates | Type 2 | Broaden existing Gold `dim_people` beyond licensed source users; preserve current `person_id` where available |
 | `dim_user` | Tenant-specific account identity | Existing `user_silver_id`; Entra object ID, UPN, mail, user type, account enabled, source key, tenant, guest state, external state, valid dates | Type 2 for status and identity attributes | Reuse existing Gold `dim_user`; enrich from Silver `users` |
 | `dim_asset` | Conformed migration and usage asset across all workloads | `asset_key` surrogate; workload, asset type, tenant, source object ID, stable natural key hash, name, URL, parent identifiers, owner, state, created/modified dates, sensitivity, lifecycle, valid dates | Type 2 | New conformed presentation entity seeded from existing workload dimensions and Silver asset tables |
-| `dim_operation` | Versioned mapping from raw audit operation to reporting class | `operation_key`; normalized workload, raw operation, operation class, activity family, read/write effect, user-impact flag, synthetic/fallback flag, effective dates, mapping status | Type 2 | New reference dimension |
+| `dim_operation_class` | Small conformed classification used by aggregate facts and Power BI | `operation_class_key`; Read, Write, Share, Admin, or Unclassified name, sort order, description | Type 1 | New five-row reference dimension |
+| `dim_operation` | Versioned mapping from raw audit operation to reporting class | `operation_key`; normalized workload, raw operation, `operation_class_key`, activity family, user-impact flag, synthetic/fallback flag, effective dates, mapping status | Type 2 | New reference dimension |
 | `dim_evidence_source` | Distinguishes observed and inferred usage | `evidence_source_key`; source type, source system, priority, confidence tier, supports-person-attribution, supports-volume, supports-operation, active flag | Type 1 | New small reference dimension |
 | `dim_device` | Conformed device used by a person or sign-in | `device_key`; Entra, Intune, and MDE identifiers, OS, model, management, compliance, trust, ownership, active state, valid dates | Type 2 | New Gold dimension from Silver `devices`, `intune_devices`, and `mde_devices` |
 | `dim_migration_wave` | Migration program, wave, cutover, and verification context | `migration_wave_key`; program, wave, source tenant, target tenant, planned and actual cutover dates, owner, status, threshold profile | Type 2 | New dimension; no current authoritative wave entity was found |
@@ -218,9 +223,10 @@ durable key because each can change.
 
 ### Operation taxonomy
 
-`dim_operation` resolves a case-normalized `(workload, operation)` pair. Exact mappings
-take precedence over approved prefix or regular-expression mappings. Every new value
-first lands on the Unclassified member and generates a stewardship alert.
+`dim_operation` resolves a case-normalized `(workload, operation)` pair to
+`dim_operation_class`. Exact mappings take precedence over approved prefix or
+regular-expression mappings. Every new value first lands on the Unclassified member
+and generates a stewardship alert.
 
 | Workload | Representative operations | Operation class | Activity family |
 |---|---|---|---|
@@ -276,7 +282,9 @@ evidence may fill a null but must not be added to higher-priority volume.
 | Person facts | `dim_people` | Many to one | Canonical individual |
 | Person facts | `dim_user` | Many to one | Tenant account used for the activity |
 | Asset facts | `dim_asset` | Many to one | Conformed asset |
-| Usage facts | `dim_operation` | Many to one | Operation class is an attribute of the operation version |
+| `fact_person_asset_activity_daily` | `dim_operation` | Many to one | Preserves the raw operation and its effective taxonomy mapping |
+| `fact_person_asset_activity_daily` | `dim_operation_class` | Many to one | Denormalized class key supports direct star-schema filtering and must agree with `dim_operation` |
+| `fact_asset_usage_daily` | `dim_operation_class` | Many to one | Enforces the required daily asset and operation-class grain |
 | Usage facts | `dim_evidence_source` | Many to one | Audit, Graph Usage, or Metadata Fallback |
 | Sign-in fact | `dim_device` | Many to one | Unknown when the event has no device identifier |
 | Verification fact | `bridge_asset_migration` | Many to one | Carries the approved source-to-target mapping version |
@@ -301,7 +309,7 @@ evidence may fill a null but must not be added to higher-priority volume.
 For asset `A`, operation class `C`, and as-of date `D`:
 
 ```text
-COUNT DISTINCT person_key
+COUNT DISTINCT person_id
 WHERE asset_key = A
   AND operation_class = C
   AND activity_date BETWEEN D - 6 days AND D
@@ -314,7 +322,7 @@ Report unresolved account activity separately.
 ### Active Users 30 Days
 
 ```text
-COUNT DISTINCT person_key
+COUNT DISTINCT person_id
 WHERE asset_key = A
   AND operation_class = C
   AND activity_date BETWEEN D - 29 days AND D
@@ -327,7 +335,7 @@ Days.
 ### Active Users 90 Days
 
 ```text
-COUNT DISTINCT person_key
+COUNT DISTINCT person_id
 WHERE asset_key = A
   AND operation_class = C
   AND activity_date BETWEEN D - 89 days AND D
@@ -443,7 +451,7 @@ silently treating the component as zero.
 | Flow Runs | Activity volume for `asset_type = PowerAutomateFlow` and `activity_family = Flow execution` |
 | App Launches | Activity volume for `asset_type = PowerApp` and `activity_family = App launch` |
 | Report Views | Activity volume for `asset_type = PowerBIReport` and `activity_family = Analytics consumption` |
-| Distinct Users | Exact distinct `person_key` in the selected scope, calculated from the person-asset fact |
+| Distinct Users | Exact distinct `person_id` in the selected scope, calculated from the person-asset fact |
 | Usage Retention Percentage | `100 * target comparison-period volume / NULLIF(source baseline volume, 0)` |
 
 ## Section 7: Star schema diagram
@@ -455,7 +463,7 @@ silently treating the component as zero.
                             |
 DimTenant ---- FactAssetUsageDaily ---- DimAsset
                             |
-                      DimOperation
+                   DimOperationClass
                             |
                    DimEvidenceSource
 ```
@@ -468,6 +476,7 @@ DimTenant ----------------------------+
 DimPeople ---- FactPersonAssetActivityDaily ---- DimAsset
 DimUser ------------------------------+
 DimOperation -------------------------+
+DimOperationClass --------------------+
 DimEvidenceSource --------------------+
 ```
 
@@ -491,7 +500,7 @@ DimMigrationWave --------------+
 ```text
 DimDate -------------------------------+
 DimMigrationWave ----------------------+
-DimOperation --------------------------+
+DimOperationClass ---------------------+
 DimTenant (Source) --------------------+
 DimTenant (Target) --------------------+
 DimAsset (Source) ---- BridgeAssetMigration ---- DimAsset (Target)
@@ -513,14 +522,417 @@ DimAsset (From) ---- BridgeAssetRelationship ---- DimAsset (To)
 
 ## Section 8: Physical design recommendations
 
+### MVP physical data model for requirements 1 through 3
+
+The MVP requires ten Gold tables. Existing dimensions are extended rather than
+duplicated. Delta Lake does not enforce primary and foreign keys, so the listed keys are
+logical constraints that pipeline expectations and data-quality tests must validate.
+
+```text
+Silver audit event
+    -> resolve tenant, asset, person/account, and raw operation
+    -> aggregate to FactPersonAssetActivityDaily
+    -> map raw operation to Read/Write/Share/Admin
+    -> aggregate to FactAssetUsageDaily
+    -> consume from Power BI
+```
+
+Physical conventions:
+
+* Surrogate keys use `STRING` MD5 values to match the current Gold conventions.
+* `date_key` uses an `INT` value in `yyyyMMdd` form.
+* Counts use `BIGINT` because the model must support billions of audit events.
+* Event timestamps use UTC `TIMESTAMP`.
+* All required foreign keys resolve to an Unknown or Unresolved member instead of null.
+* Type 2 tables use `valid_from`, `valid_to`, and `is_current`.
+
+#### `dim_date`
+
+Reuse the existing Gold date dimension.
+
+| Column | Type | Null | Key | Description |
+|---|---|---:|---|---|
+| `date_key` | `INT` | No | PK | Calendar date as `yyyyMMdd` |
+| `calendar_date` | `DATE` | No | Alternate key | Calendar date |
+| `day_of_week` | `TINYINT` | No | | ISO day number |
+| `week_of_year` | `TINYINT` | No | | ISO week |
+| `iso_year` | `SMALLINT` | No | | ISO week-year |
+| `month_number` | `TINYINT` | No | | Calendar month |
+| `month_name` | `STRING` | No | | Display name |
+| `quarter_number` | `TINYINT` | No | | Calendar quarter |
+| `calendar_year` | `SMALLINT` | No | | Calendar year |
+
+#### `dim_tenant`
+
+Extend the existing Gold tenant dimension.
+
+| Column | Type | Null | Key | Description |
+|---|---|---:|---|---|
+| `tenant_key` | `STRING` | No | PK | MD5 surrogate key |
+| `source_key` | `STRING` | No | Alternate key | Toolkit tenant label such as `madev1` |
+| `tenant_id` | `STRING` | Yes | Natural key | Entra tenant GUID |
+| `tenant_name` | `STRING` | No | | Tenant display name |
+| `tenant_role` | `STRING` | No | | Source, Target, or External |
+| `default_domain` | `STRING` | Yes | | Primary verified domain |
+| `valid_from` | `TIMESTAMP` | No | | Type 2 effective start |
+| `valid_to` | `TIMESTAMP` | No | | Type 2 effective end |
+| `is_current` | `BOOLEAN` | No | | Current-row flag |
+
+#### `dim_asset`
+
+One conformed row shape represents every supported asset. Workload-specific details
+remain in source dimensions and can be exposed as one-to-one extensions when needed.
+
+| Column | Type | Null | Key | Description |
+|---|---|---:|---|---|
+| `asset_key` | `STRING` | No | PK | MD5 of tenant ID, asset type, and native object ID |
+| `resource_tenant_key` | `STRING` | No | FK | Tenant that owns the asset |
+| `asset_natural_key` | `STRING` | No | Alternate key | Normalized durable composite key |
+| `asset_type` | `STRING` | No | | `SharePointSite`, `Team`, `PowerBIReport`, `PowerApp`, `PowerAutomateFlow`, or `Mailbox` |
+| `workload` | `STRING` | No | | SharePoint, Teams, PowerBI, PowerApps, PowerAutomate, or Exchange |
+| `native_asset_id` | `STRING` | No | | Workload-native GUID or stable object ID |
+| `asset_name` | `STRING` | No | | Display name |
+| `asset_url_or_address` | `STRING` | Yes | | Site URL, report URL, app URL, or mailbox SMTP address |
+| `parent_asset_key` | `STRING` | Yes | FK | Optional workspace, Team, or container asset |
+| `owner_user_silver_id` | `STRING` | Yes | FK | Primary tenant account owner when one exists |
+| `asset_status` | `STRING` | Yes | | Active, Archived, Disabled, or Deleted |
+| `source_created_at` | `TIMESTAMP` | Yes | | Source creation time |
+| `source_modified_at` | `TIMESTAMP` | Yes | | Source metadata modification time |
+| `valid_from` | `TIMESTAMP` | No | | Type 2 effective start |
+| `valid_to` | `TIMESTAMP` | No | | Type 2 effective end |
+| `is_current` | `BOOLEAN` | No | | Current-row flag |
+| `gold_loaded_at` | `TIMESTAMP` | No | | Gold load time |
+
+#### `dim_operation_class`
+
+This table has exactly five governed rows.
+
+| Column | Type | Null | Key | Description |
+|---|---|---:|---|---|
+| `operation_class_key` | `TINYINT` | No | PK | `0` Unclassified, `1` Read, `2` Write, `3` Share, `4` Admin |
+| `operation_class` | `STRING` | No | Alternate key | Reporting category |
+| `sort_order` | `TINYINT` | No | | Display order |
+| `description` | `STRING` | No | | Business definition |
+| `is_user_activity` | `BOOLEAN` | No | | Whether the class normally represents user activity |
+
+#### `dim_operation`
+
+This is the governed raw-operation taxonomy. It maps every observed audit operation to
+one operation class.
+
+| Column | Type | Null | Key | Description |
+|---|---|---:|---|---|
+| `operation_key` | `STRING` | No | PK | MD5 of normalized workload and raw operation |
+| `workload` | `STRING` | No | Alternate key | Normalized Microsoft 365 workload |
+| `raw_operation` | `STRING` | No | Alternate key | Original audit operation |
+| `normalized_operation` | `STRING` | No | | Lowercase trimmed operation |
+| `operation_class_key` | `TINYINT` | No | FK | Classification in `dim_operation_class` |
+| `activity_family` | `STRING` | Yes | | File access, app launch, report view, flow run, and similar group |
+| `mapping_status` | `STRING` | No | | Approved, Proposed, or Unclassified |
+| `mapping_rule` | `STRING` | No | | Exact, Prefix, RegularExpression, or Default |
+| `is_synthetic_operation` | `BOOLEAN` | No | | True for metadata or Graph fallback operations |
+| `valid_from` | `TIMESTAMP` | No | | Type 2 effective start |
+| `valid_to` | `TIMESTAMP` | No | | Type 2 effective end |
+| `is_current` | `BOOLEAN` | No | | Current-row flag |
+
+#### `dim_people`
+
+Reuse and broaden the existing Gold person dimension so it includes internal and
+external people observed in usage data.
+
+| Column | Type | Null | Key | Description |
+|---|---|---:|---|---|
+| `person_id` | `STRING` | No | PK | Canonical person surrogate key |
+| `home_tenant_key` | `STRING` | Yes | FK | Person's authoritative home tenant |
+| `primary_organization_id` | `STRING` | Yes | FK | Existing Gold organization key |
+| `display_name` | `STRING` | Yes | | Preferred display name |
+| `primary_email` | `STRING` | Yes | | Normalized primary email |
+| `employee_id` | `STRING` | Yes | | Enterprise employee identifier |
+| `person_category` | `STRING` | No | | Internal, External, ServicePrincipal, or Unresolved |
+| `identity_status` | `STRING` | No | | Resolved, Ambiguous, or Unresolved |
+| `identity_confidence_pct` | `DECIMAL(5,2)` | No | | Resolution confidence from 0 to 100 |
+| `valid_from` | `TIMESTAMP` | No | | Type 2 effective start |
+| `valid_to` | `TIMESTAMP` | No | | Type 2 effective end |
+| `is_current` | `BOOLEAN` | No | | Current-row flag |
+
+#### `dim_user`
+
+Reuse the existing Gold tenant-account dimension. A guest account is an account type,
+not a separate person.
+
+| Column | Type | Null | Key | Description |
+|---|---|---:|---|---|
+| `user_silver_id` | `STRING` | No | PK | Existing Gold tenant-account key |
+| `tenant_key` | `STRING` | No | FK | Tenant where the account exists |
+| `entra_object_id` | `STRING` | Yes | Natural key | Entra object GUID |
+| `user_principal_name` | `STRING` | Yes | | Normalized UPN |
+| `mail` | `STRING` | Yes | | Normalized email |
+| `display_name` | `STRING` | Yes | | Tenant-local display name |
+| `account_type` | `STRING` | No | | Member, Guest, ServicePrincipal, or Unresolved |
+| `home_tenant_key` | `STRING` | Yes | FK | Home tenant for guest or external accounts |
+| `account_enabled` | `BOOLEAN` | Yes | | Current enabled state |
+| `valid_from` | `TIMESTAMP` | No | | Type 2 effective start |
+| `valid_to` | `TIMESTAMP` | No | | Type 2 effective end |
+| `is_current` | `BOOLEAN` | No | | Current-row flag |
+
+#### `bridge_person_account`
+
+This bridge resolves multiple tenant accounts to one person.
+
+| Column | Type | Null | Key | Description |
+|---|---|---:|---|---|
+| `person_account_key` | `STRING` | No | PK | MD5 of person, account, role, and effective start |
+| `person_id` | `STRING` | No | FK | Canonical person |
+| `user_silver_id` | `STRING` | No | FK | Tenant account |
+| `identity_role` | `STRING` | No | | SourceMember, TargetMember, Guest, ExternalMember, or ServicePrincipal |
+| `match_method` | `STRING` | No | | ObjectId, EmployeeIdAndUpn, MailAlias, GuestIssuer, or Manual |
+| `match_confidence_pct` | `DECIMAL(5,2)` | No | | Mapping confidence from 0 to 100 |
+| `mapping_status` | `STRING` | No | | Approved, Candidate, Rejected, or Unresolved |
+| `valid_from` | `TIMESTAMP` | No | | Effective start |
+| `valid_to` | `TIMESTAMP` | No | | Effective end |
+| `is_current` | `BOOLEAN` | No | | Current-row flag |
+
+#### `dim_evidence_source`
+
+| Column | Type | Null | Key | Description |
+|---|---|---:|---|---|
+| `evidence_source_key` | `TINYINT` | No | PK | `1` Audit, `2` Graph Usage, `3` Metadata Fallback |
+| `evidence_source` | `STRING` | No | Alternate key | Source label |
+| `source_priority` | `TINYINT` | No | | Lower number has higher precedence |
+| `supports_person_attribution` | `BOOLEAN` | No | | Whether a person can be resolved |
+| `supports_activity_volume` | `BOOLEAN` | No | | Whether counts represent activity volume |
+| `supports_operation_class` | `BOOLEAN` | No | | Whether Read/Write/Share/Admin is supported |
+
+#### `fact_person_asset_activity_daily`
+
+This is the lowest Gold usage grain in the MVP. It is still aggregated daily and does
+not contain individual audit events.
+
+| Column | Type | Null | Key | Description |
+|---|---|---:|---|---|
+| `activity_date_key` | `INT` | No | PK, FK | Activity date |
+| `activity_month` | `DATE` | No | Partition | First day of activity month |
+| `resource_tenant_key` | `STRING` | No | PK, FK | Tenant hosting the asset |
+| `person_id` | `STRING` | No | PK, FK | Canonical person or reserved unresolved member |
+| `user_silver_id` | `STRING` | No | PK, FK | Tenant account used for the activity |
+| `asset_key` | `STRING` | No | PK, FK | Used asset |
+| `operation_key` | `STRING` | No | PK, FK | Raw operation taxonomy member |
+| `operation_class_key` | `TINYINT` | No | FK | Denormalized class from `dim_operation` |
+| `evidence_source_key` | `TINYINT` | No | PK, FK | Audit, Graph Usage, or metadata |
+| `activity_count` | `BIGINT` | No | Measure | Number of source events represented |
+| `successful_activity_count` | `BIGINT` | No | Measure | Successful events |
+| `failed_activity_count` | `BIGINT` | No | Measure | Failed events |
+| `first_activity_at` | `TIMESTAMP` | Yes | Measure | First event in the day |
+| `last_activity_at` | `TIMESTAMP` | Yes | Measure | Last event in the day |
+| `is_cross_tenant` | `BOOLEAN` | No | Attribute | Home tenant differs from resource tenant |
+| `identity_resolution_confidence_pct` | `DECIMAL(5,2)` | No | Quality | Person resolution confidence |
+| `asset_resolution_confidence_pct` | `DECIMAL(5,2)` | No | Quality | Asset resolution confidence |
+| `gold_loaded_at` | `TIMESTAMP` | No | Audit | Gold load time |
+
+Logical primary key:
+
+```text
+(activity_date_key, resource_tenant_key, person_id, user_silver_id,
+ asset_key, operation_key, evidence_source_key)
+```
+
+#### `fact_asset_usage_daily`
+
+This is the primary Power BI fact and implements the exact requirement grain.
+
+| Column | Type | Null | Key | Description |
+|---|---|---:|---|---|
+| `activity_date_key` | `INT` | No | PK, FK | As-of activity date |
+| `activity_month` | `DATE` | No | Partition | First day of activity month |
+| `resource_tenant_key` | `STRING` | No | PK, FK | Tenant hosting the asset |
+| `asset_key` | `STRING` | No | PK, FK | Used asset |
+| `operation_class_key` | `TINYINT` | No | PK, FK | Read, Write, Share, Admin, or Unclassified |
+| `evidence_source_key` | `TINYINT` | No | PK, FK | Evidence source |
+| `activity_volume` | `BIGINT` | No | Measure | Events for this asset, class, and date |
+| `successful_activity_volume` | `BIGINT` | No | Measure | Successful events |
+| `failed_activity_volume` | `BIGINT` | No | Measure | Failed events |
+| `daily_distinct_people` | `BIGINT` | No | Measure | Exact people active on this date |
+| `active_people_7d` | `BIGINT` | No | Measure | Exact people active in the trailing 7 days |
+| `active_people_30d` | `BIGINT` | No | Measure | Exact people active in the trailing 30 days |
+| `active_people_90d` | `BIGINT` | No | Measure | Exact people active in the trailing 90 days |
+| `cross_tenant_activity_volume` | `BIGINT` | No | Measure | Activity where home and resource tenants differ |
+| `last_activity_at` | `TIMESTAMP` | Yes | Measure | Latest activity for this class through the as-of date |
+| `resolved_person_count` | `BIGINT` | No | Quality | Activity rows with a resolved person |
+| `unresolved_person_count` | `BIGINT` | No | Quality | Activity rows on the unresolved person |
+| `coverage_pct` | `DECIMAL(5,2)` | No | Quality | Resolved activity divided by total activity |
+| `gold_loaded_at` | `TIMESTAMP` | No | Audit | Gold load time |
+
+Logical primary key:
+
+```text
+(activity_date_key, resource_tenant_key, asset_key,
+ operation_class_key, evidence_source_key)
+```
+
+`last_activity_at` on the Read row is Last Read Timestamp. The same column on the Write
+row is Last Write Timestamp. Keeping one generic column avoids duplicating class-specific
+columns.
+
+### Dummy data walkthrough
+
+The following rows illustrate one internal person and one external person using the same
+SharePoint site in the Contoso source tenant.
+
+#### Tenant and asset rows
+
+| tenant_key | source_key | tenant_name | tenant_role |
+|---|---|---|---|
+| `ten_contoso` | `contoso_src` | Contoso | Source |
+| `ten_fabrikam` | `fabrikam_ext` | Fabrikam | External |
+
+| asset_key | resource_tenant_key | asset_type | native_asset_id | asset_name |
+|---|---|---|---|---|
+| `ast_finance_site` | `ten_contoso` | SharePointSite | `site-1001` | Finance Hub |
+
+#### Person, account, and identity bridge rows
+
+| person_id | home_tenant_key | display_name | person_category | identity_status |
+|---|---|---|---|---|
+| `per_alice` | `ten_contoso` | Alice Adams | Internal | Resolved |
+| `per_bob` | `ten_fabrikam` | Bob Brown | External | Resolved |
+
+| user_silver_id | tenant_key | user_principal_name | account_type | home_tenant_key |
+|---|---|---|---|---|
+| `usr_contoso_alice` | `ten_contoso` | `alice@contoso.com` | Member | `ten_contoso` |
+| `usr_contoso_bob_guest` | `ten_contoso` | `bob_fabrikam.com#ext#@contoso.com` | Guest | `ten_fabrikam` |
+
+| person_id | user_silver_id | identity_role | match_method | match_confidence_pct |
+|---|---|---|---|---:|
+| `per_alice` | `usr_contoso_alice` | SourceMember | ObjectId | 100.00 |
+| `per_bob` | `usr_contoso_bob_guest` | Guest | GuestIssuer | 100.00 |
+
+Bob is stored once in `dim_people` even if he later receives guest accounts in several
+resource tenants. Each guest account receives its own `dim_user` row and bridge row.
+
+#### Operation rows
+
+| operation_class_key | operation_class | description |
+|---:|---|---|
+| 0 | Unclassified | Operation requires taxonomy review |
+| 1 | Read | Consumes or views content without changing it |
+| 2 | Write | Creates, updates, deletes, sends, or executes content |
+| 3 | Share | Grants access or distributes content to another principal |
+| 4 | Admin | Changes configuration, policy, membership, or administration |
+
+| operation_key | workload | raw_operation | operation_class_key | activity_family |
+|---|---|---|---:|---|
+| `op_file_accessed` | SharePoint | FileAccessed | 1 | Content consumption |
+| `op_file_downloaded` | SharePoint | FileDownloaded | 1 | Content consumption |
+| `op_file_modified` | SharePoint | FileModified | 2 | Content change |
+
+Both `FileAccessed` and `FileDownloaded` map to Read. They remain separate in the person
+fact and roll up to one Read row in the asset fact.
+
+All dummy fact rows use `resource_tenant_key = ten_contoso` and
+`evidence_source_key = 1`, representing Audit evidence.
+
+#### Person-level daily fact rows
+
+| activity_date_key | person_id | user_silver_id | asset_key | operation_key | activity_count | last_activity_at | is_cross_tenant |
+|---:|---|---|---|---|---:|---|---|
+| 20260922 | `per_alice` | `usr_contoso_alice` | `ast_finance_site` | `op_file_accessed` | 5 | 2026-09-22 10:00:00 | false |
+| 20260922 | `per_alice` | `usr_contoso_alice` | `ast_finance_site` | `op_file_downloaded` | 2 | 2026-09-22 10:05:00 | false |
+| 20260922 | `per_alice` | `usr_contoso_alice` | `ast_finance_site` | `op_file_modified` | 1 | 2026-09-22 10:10:00 | false |
+| 20260922 | `per_bob` | `usr_contoso_bob_guest` | `ast_finance_site` | `op_file_accessed` | 2 | 2026-09-22 10:15:00 | true |
+
+#### Asset-level daily fact rows
+
+| activity_date_key | asset_key | operation_class_key | activity_volume | daily_distinct_people | active_people_7d | active_people_30d | active_people_90d | cross_tenant_activity_volume | last_activity_at |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---|
+| 20260922 | `ast_finance_site` | 1 | 9 | 2 | 2 | 2 | 2 | 2 | 2026-09-22 10:15:00 |
+| 20260922 | `ast_finance_site` | 2 | 1 | 1 | 1 | 1 | 1 | 0 | 2026-09-22 10:10:00 |
+
+The Read row contains nine activities: Alice performed seven and Bob performed two. It
+contains two distinct people even though Alice generated two different raw Read
+operations.
+
+From these rows:
+
+* Active Users 7 Days for Read is `2`.
+* Last Read Timestamp is `2026-09-22 10:15:00`.
+* Last Write Timestamp is `2026-09-22 10:10:00`.
+* Read/Write Ratio is `9 / 1 = 9.0`.
+* Cross-Tenant Usage Percentage is `2 / (9 + 1) * 100 = 20%`.
+* Alice has eight activities on the asset.
+* Bob has two activities and is identified as an external guest through his home tenant.
+
+### Example queries
+
+#### Asset usage with Read/Write Ratio
+
+```sql
+SELECT
+    a.asset_name,
+    f.activity_date_key,
+    SUM(CASE WHEN c.operation_class = 'Read'
+             THEN f.activity_volume ELSE 0 END) AS read_volume,
+    SUM(CASE WHEN c.operation_class = 'Write'
+             THEN f.activity_volume ELSE 0 END) AS write_volume,
+    MAX(CASE WHEN c.operation_class = 'Read'
+             THEN f.last_activity_at END) AS last_read_at,
+    MAX(CASE WHEN c.operation_class = 'Write'
+             THEN f.last_activity_at END) AS last_write_at,
+    SUM(CASE WHEN c.operation_class = 'Read'
+             THEN f.activity_volume ELSE 0 END)
+      / NULLIF(
+          SUM(CASE WHEN c.operation_class = 'Write'
+                   THEN f.activity_volume ELSE 0 END),
+          0
+        ) AS read_write_ratio
+FROM gold.fact_asset_usage_daily AS f
+JOIN gold.dim_asset AS a
+  ON f.asset_key = a.asset_key
+JOIN gold.dim_operation_class AS c
+  ON f.operation_class_key = c.operation_class_key
+GROUP BY a.asset_name, f.activity_date_key;
+```
+
+#### Usage by person with cross-tenant classification
+
+```sql
+SELECT
+    p.display_name,
+    p.person_category,
+    home.tenant_name AS home_tenant,
+    resource.tenant_name AS resource_tenant,
+    a.asset_name,
+    c.operation_class,
+    SUM(f.activity_count) AS activity_count,
+    MAX(f.last_activity_at) AS last_activity_at,
+    MAX(CASE WHEN f.is_cross_tenant THEN 1 ELSE 0 END) AS has_cross_tenant_usage
+FROM gold.fact_person_asset_activity_daily AS f
+JOIN gold.dim_people AS p
+  ON f.person_id = p.person_id
+JOIN gold.dim_tenant AS home
+  ON p.home_tenant_key = home.tenant_key
+JOIN gold.dim_tenant AS resource
+  ON f.resource_tenant_key = resource.tenant_key
+JOIN gold.dim_asset AS a
+  ON f.asset_key = a.asset_key
+JOIN gold.dim_operation_class AS c
+  ON f.operation_class_key = c.operation_class_key
+GROUP BY
+    p.display_name,
+    p.person_category,
+    home.tenant_name,
+    resource.tenant_name,
+    a.asset_name,
+    c.operation_class;
+```
+
 ### Delta table layout
 
 | Table | Partition or clustering recommendation | Rationale |
 |---|---|---|
-| `fact_person_asset_activity_daily` | Partition by `activity_month`; liquid cluster by `resource_tenant_key`, `asset_key`, `person_key` where supported | Month pruning controls file counts while clustering supports asset and person predicates |
-| `fact_asset_usage_daily` | Partition by `activity_month`; liquid cluster by `resource_tenant_key`, `asset_key`, `operation_key` | Primary Power BI access path |
-| `fact_person_sign_in_daily` | Partition by `sign_in_month`; liquid cluster by `resource_tenant_key`, `person_key`, `asset_key` | Supports person and application profile queries |
-| `fact_person_activity_snapshot` | Partition by `snapshot_month`; cluster by `resource_tenant_key`, `person_key` | Efficient current and historical profile access |
+| `fact_person_asset_activity_daily` | Partition by `activity_month`; liquid cluster by `resource_tenant_key`, `asset_key`, `person_id` where supported | Month pruning controls file counts while clustering supports asset and person predicates |
+| `fact_asset_usage_daily` | Partition by `activity_month`; liquid cluster by `resource_tenant_key`, `asset_key`, `operation_class_key` | Primary Power BI access path |
+| `fact_person_sign_in_daily` | Partition by `sign_in_month`; liquid cluster by `resource_tenant_key`, `person_id`, `asset_key` | Supports person and application profile queries |
+| `fact_person_activity_snapshot` | Partition by `snapshot_month`; cluster by `resource_tenant_key`, `person_id` | Efficient current and historical profile access |
 | `fact_asset_migration_verification` | Partition by `verification_month`; cluster by `migration_wave_key`, source asset, target asset | Verification reports filter by wave and mapped assets |
 | Type 2 dimensions and bridges | Do not date-partition unless volume proves it necessary; cluster large bridges by primary dimension keys | Avoid small partitions and preserve point lookups |
 
