@@ -12,6 +12,11 @@ keywords:
   - Power BI
 ---
 
+> [!NOTE]
+> For the requirement-grouped physical model, current-schema source mapping, and
+> end-to-end dummy data for the three must-have requirements, see
+> [Usage Telemetry DA05 Must-Have Physical Model](./usage-telemetry-da05-must-have-physical-model.md).
+
 ## Section 1: Business capability matrix
 
 The model uses a detailed daily person-to-asset fact as the reusable calculation base
